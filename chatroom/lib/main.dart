@@ -1,3 +1,4 @@
+import 'package:chatroom/shared/styled_button.dart';
 import 'package:chatroom/shared/styled_text.dart';
 import 'package:flutter/material.dart';
 import 'package:chatroom/screens/sign_up/sign_up.dart';
@@ -46,18 +47,16 @@ class _MyHomePageState extends State<MyHomePage> {
           
           children: <Widget>[
             const StyledTitle(
-              'Press the button to sign up:',
+              'Add a new account',
             ),
             
-            FloatingActionButton.extended( 
+            StyledButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const SignInScreen()),
-                );
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => const MyApp(),
+                ));
               },
-              label: const Text('Sign Up'), 
-              icon: const Icon(Icons.login), 
+              child: const Text('Welcome'),
             ),
           ],
         ),
