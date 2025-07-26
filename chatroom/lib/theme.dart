@@ -6,7 +6,7 @@ class AppColors {
   static Color secondaryColor = const Color.fromRGBO(10, 132, 255, 1);
   static Color secondaryAccent = const Color.fromRGBO(35, 39, 42, 1);
   static Color titleColor = const Color.fromRGBO(255, 255, 255, 1);
-  static Color textColor = const Color.fromRGBO(185, 187, 190, 1);
+  static Color textColor = const Color.fromRGBO(255, 255, 255, 1);
   static Color successColor = const Color.fromRGBO(46, 204, 113, 1);
   static Color highlightColor = const Color.fromRGBO(231, 76, 60, 1);
 }
@@ -56,8 +56,20 @@ ThemeData primaryTheme = ThemeData(
 
   inputDecorationTheme: InputDecorationTheme(
     filled: true,
-    fillColor: AppColors.secondaryColor.withAlpha(128),
-    border: InputBorder.none,
+    fillColor: AppColors.textColor,
+    border: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(12),
+    borderSide: BorderSide.none,
+    ),
+
+    focusedBorder: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(12),
+    borderSide: BorderSide(
+      color: AppColors.primaryColor, 
+      width: 2.0,
+    ),
+    ),
+
     labelStyle: TextStyle(color: AppColors.textColor),
     prefixIconColor: AppColors.textColor,
   ),

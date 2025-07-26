@@ -1,5 +1,6 @@
 import 'package:chatroom/shared/styled_button.dart';
 import 'package:chatroom/shared/styled_text.dart';
+import 'package:chatroom/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:chatroom/screens/sign_up/sign_up.dart';
 
@@ -13,11 +14,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      title: 'Chat Room',
+      theme: primaryTheme,      
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -38,7 +36,6 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
       body: Center( 
