@@ -25,9 +25,8 @@ class _SignInScreenState extends State<SignInScreen> {
         child: Column(
           children: [
             const TextField(
-            decoration: InputDecoration(
-            hintText: 'Enter your name',
-            border: OutlineInputBorder(),
+              decoration: InputDecoration(
+              hintText: 'Enter your name',
             )
             ),
 
