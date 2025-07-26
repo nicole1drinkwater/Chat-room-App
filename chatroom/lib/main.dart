@@ -53,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
             StyledButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => const MyApp(),
+                  builder: (context) => const SignInScreen(),
                 ));
               },
               child: const Text('Welcome'),
