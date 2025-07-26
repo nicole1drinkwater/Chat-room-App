@@ -31,14 +31,19 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
           ),
 
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(9.0),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center, 
+
               children: [
                 
-                const Expanded(
+                Expanded(
                   child: TextField(
-                    decoration: InputDecoration(
+                    style: Theme.of(context).textTheme.bodyMedium,
+                    decoration: const InputDecoration(
                       hintText: 'Enter a message...',
+                      contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+                      isDense: true,
                     ),
                   ),
                 ),

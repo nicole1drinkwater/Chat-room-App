@@ -26,7 +26,7 @@ ThemeData primaryTheme = ThemeData(
     centerTitle: true,
   ),
 
-  textTheme: TextTheme().copyWith(
+  textTheme: TextTheme(
     bodyMedium: TextStyle(
       color: AppColors.textColor,
       fontSize: 16,

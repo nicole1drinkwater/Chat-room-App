@@ -24,8 +24,9 @@ class _SignInScreenState extends State<SignInScreen> {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            const TextField(
-              decoration: InputDecoration(
+              TextField(
+              style: Theme.of(context).textTheme.bodyMedium,
+              decoration: const InputDecoration(
               hintText: 'Enter your name',
             )
             ),
