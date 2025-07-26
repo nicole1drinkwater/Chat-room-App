@@ -39,7 +39,9 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                 
                 Expanded(
                   child: TextField(
-                    style: Theme.of(context).textTheme.bodyMedium,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: AppColors.inputTextColor,
+                    ),
                     decoration: const InputDecoration(
                       hintText: 'Enter a message...',
                       contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
