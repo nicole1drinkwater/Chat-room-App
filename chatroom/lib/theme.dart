@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static Color primaryColor = const Color.fromRGBO(162, 29, 19, 1);
-  static Color primaryAccent = const Color.fromRGBO(120, 14, 14, 1);
-  static Color secondaryColor = const Color.fromRGBO(45, 45, 45, 1);
-  static Color secondaryAccent = const Color.fromRGBO(35, 35, 35, 1);
-  static Color titleColor = const Color.fromRGBO(200, 200, 200, 1);
-  static Color textColor = const Color.fromRGBO(150, 150, 150, 1);
-  static Color successColor = const Color.fromRGBO(9, 149, 110, 1);
-  static Color highlightColor = const Color.fromRGBO(212, 172, 13, 1);
+  static Color primaryColor = const Color.fromRGBO(52, 183, 241, 1);
+  static Color primaryAccent = const Color.fromRGBO(10, 132, 255, 1);
+  static Color secondaryColor = const Color.fromRGBO(10, 132, 255, 1);
+  static Color secondaryAccent = const Color.fromRGBO(35, 39, 42, 1);
+  static Color titleColor = const Color.fromRGBO(255, 255, 255, 1);
+  static Color textColor = const Color.fromRGBO(185, 187, 190, 1);
+  static Color successColor = const Color.fromRGBO(46, 204, 113, 1);
+  static Color highlightColor = const Color.fromRGBO(231, 76, 60, 1);
 }
 
 ThemeData primaryTheme = ThemeData(

@@ -37,7 +37,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   builder: (context) => const ChatRoomScreen(),
                 ));
               },
-              child: const Text('Submit'),
+              child: const StyledText('Submit'),
             ),
           ]
         ),

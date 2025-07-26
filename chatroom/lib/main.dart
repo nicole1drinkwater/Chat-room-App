@@ -56,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   builder: (context) => const SignInScreen(),
                 ));
               },
-              child: const Text('Welcome'),
+              child: const StyledText('Welcome'),
             ),
           ],
         ),
