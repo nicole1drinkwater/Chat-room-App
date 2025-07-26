@@ -1,4 +1,5 @@
 import 'package:chatroom/screens/chat_room/chat_room.dart';
+import 'package:chatroom/theme.dart';
 import 'package:flutter/material.dart';
 
 import '../../main.dart';
@@ -25,7 +26,9 @@ class _SignInScreenState extends State<SignInScreen> {
         child: Column(
           children: [
               TextField(
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: AppColors.inputTextColor,
+              ),
               decoration: const InputDecoration(
               hintText: 'Enter your name',
             )
