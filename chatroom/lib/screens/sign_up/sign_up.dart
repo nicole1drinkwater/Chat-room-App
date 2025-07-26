@@ -1,3 +1,4 @@
+import 'package:chatroom/screens/chat_room/chat_room.dart';
 import 'package:flutter/material.dart';
 
 import '../../main.dart';
@@ -33,7 +34,7 @@ class _SignInScreenState extends State<SignInScreen> {
             StyledButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => const MyApp(),
+                  builder: (context) => const ChatRoomScreen(),
                 ));
               },
               child: const Text('Submit'),
