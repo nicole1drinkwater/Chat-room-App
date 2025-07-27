@@ -24,9 +24,12 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
   @override
   void initState() {
     Provider.of<MessageStore>(context, listen: false)
-    .fetchMessagesOnce();
-    
-    WidgetsBinding.instance.addPostFrameCallback((_) => scrollToBottom());
+    .fetchMessagesOnce()
+    .then((_) {
+      scrollToBottom();
+    });
+
+
     super.initState();
   }
 
@@ -93,6 +96,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) => scrollToBottom());
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Chat Room'),
