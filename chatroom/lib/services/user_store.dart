@@ -7,9 +7,9 @@ class UserStore extends ChangeNotifier {
   final List<User> _users = [];
   User? _currentUser; 
  
- User? get currentUser => _currentUser;
+  User? get currentUser => _currentUser;
 
- get users => _users;
+  get users => _users;
 
  void addUser(User user) {
   //saves to database
@@ -33,4 +33,27 @@ class UserStore extends ChangeNotifier {
   }
   
  }
+
+ Future<User> getUserData(String userId) async {
+  for (User user in _users) {
+    if (user.id == userId) {
+      return user;
+    }
+  }
+
+  final userDoc = await FirestoreService.getSingleUser(userId); 
+
+  if (userDoc.exists) {
+    final newUser = userDoc.data()!;
+    _users.add(newUser);
+    notifyListeners();
+    
+    return newUser; 
+  } 
+  else {
+    return User(id: userId, name: 'Unknown User'); 
+  }
+
+  }
+
 }
