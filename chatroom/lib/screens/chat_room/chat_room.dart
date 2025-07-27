@@ -91,9 +91,9 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                   return ListView.builder(
                     itemCount: value.messages.length,
                     itemBuilder: (_, index) {
-                      final message = messages[index];
+                      final message = value.messages[index];
                       
-                      return MessageCard(message: message);
+                      return MessageCard(message);
                     }
                   );
                 }
