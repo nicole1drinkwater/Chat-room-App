@@ -93,7 +93,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                     itemBuilder: (_, index) {
                       final message = value.messages[index];
                       
-                      return MessageCard(message);
+                      return MessageCard(message: message,);
                     }
                   );
                 }

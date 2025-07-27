@@ -26,6 +26,11 @@ class FirestoreService {
     return userRef.get();
   }
 
+    static Future<DocumentSnapshot<User>> getSingleUser(String userId) async {
+    return userRef.doc(userId).get();
+  }
+
+
   static Future<void> addMessage(Message message) async {
     await messageRef.add(message);
   }
