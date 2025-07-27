@@ -5,6 +5,7 @@ import 'package:chatroom/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/message.dart';
+import '../../services/firestore_service.dart';
 import '../../shared/styled_button.dart';
 import '../../shared/styled_text.dart';
 
@@ -25,7 +26,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
   }
 
   void handleSubmit() {
-    if (_messageController.text.trim().isEmpty){
+    if (_messageController.text.trim().isEmpty) {
       
       showDialog(context: context, builder: (context) {
         return AlertDialog(
@@ -44,28 +45,27 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
       });
 
       return;
-    
     }
-    final userStore = Provider.of<UserStore>(context, listen: false);
 
-    final currentUser = userStore.currentUser;
+      final userStore = Provider.of<UserStore>(context, listen: false);
 
-    final String senderId = currentUser!.id;
+      final currentUser = userStore.currentUser;
 
-     Provider.of<MessageStore>(context, listen: false) 
-    .addMessage(Message(
-      messageContent: _messageController.text.trim(),
-      timeSent: DateTime.now(),
-      senderID: senderId,
-      messageID: '',
-    ));
+      final String senderId = currentUser!.id;
 
-      Navigator.push(context, MaterialPageRoute(
-      builder: (context) => const ChatRoomScreen(),
-    ));
+      Provider.of<MessageStore>(context, listen: false) 
+      .addMessage(Message(
+        messageContent: _messageController.text,
+        timeSent: DateTime.now(),
+        senderID: senderId,
+        messageID: '',
+      ));
+
+        Navigator.push(context, MaterialPageRoute(
+        builder: (context) => const ChatRoomScreen(),
+      ));
 
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -94,6 +94,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                 
                 Expanded(
                   child: TextField(
+                    controller: _messageController,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: AppColors.inputTextColor,
                     ),
