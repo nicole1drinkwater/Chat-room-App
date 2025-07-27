@@ -20,6 +20,14 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
   final _messageController = TextEditingController();
 
   @override
+  void initState() {
+    Provider.of<MessageStore>(context, listen: false)
+    .fetchMessagesOnce();
+
+    super.initState();
+  }
+
+  @override
   void dispose() {
     _messageController.dispose();
     super.dispose();
