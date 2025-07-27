@@ -69,11 +69,6 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
         senderID: senderId,
         messageID: '',
       ));
-
-        Navigator.push(context, MaterialPageRoute(
-        builder: (context) => const ChatRoomScreen(),
-      ));
-
   }
 
   @override
