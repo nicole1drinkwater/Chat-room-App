@@ -9,4 +9,9 @@ class UserStore extends ChangeNotifier {
   ];
 
  get users => _users;
+
+ void addUser(User user) {
+  _users.add(user);
+  notifyListeners();
+ }
 }

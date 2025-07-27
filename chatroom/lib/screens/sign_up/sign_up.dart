@@ -1,10 +1,16 @@
 import 'package:chatroom/screens/chat_room/chat_room.dart';
 import 'package:chatroom/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../main.dart';
+import 'package:uuid/uuid.dart';
+import '../../models/user.dart';
+import '../../services/user_store.dart';
 import '../../shared/styled_text.dart';
 import '../../shared/styled_button.dart';
+
+var uuid = const Uuid();
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -44,6 +50,12 @@ class _SignInScreenState extends State<SignInScreen> {
       return;
     
     }
+
+    Provider.of<UserStore>(context, listen: false) 
+    .addUser(User(
+      name: _nameController.text.trim(),
+      id: uuid.v4(),
+    ));
 
       Navigator.push(context, MaterialPageRoute(
       builder: (context) => const ChatRoomScreen(),
