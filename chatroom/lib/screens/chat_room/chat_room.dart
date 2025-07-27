@@ -69,6 +69,10 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
         senderID: senderId,
         messageID: '',
       ));
+
+      _messageController.clear();
+      
+      FocusScope.of(context).unfocus();
   }
 
   @override
