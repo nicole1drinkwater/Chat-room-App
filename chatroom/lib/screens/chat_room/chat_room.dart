@@ -25,7 +25,8 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
   void initState() {
     Provider.of<MessageStore>(context, listen: false)
     .fetchMessagesOnce();
-
+    
+    WidgetsBinding.instance.addPostFrameCallback((_) => scrollToBottom());
     super.initState();
   }
 

@@ -30,7 +30,6 @@ class FirestoreService {
     return userRef.doc(userId).get();
   }
 
-
   static Future<void> addMessage(Message message) async {
     await messageRef.add(message);
   }
