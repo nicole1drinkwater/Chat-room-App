@@ -17,6 +17,7 @@ class UserStore extends ChangeNotifier {
   notifyListeners();
  }
 
+//for when the chat room screen is first loaded
  void fetchUsersOnce() async {
   if (users.length == 0) {
     final snapshot = await FirestoreService.getUsersOnce();
@@ -26,5 +27,6 @@ class UserStore extends ChangeNotifier {
     }
     notifyListeners();
   }
+  
  }
 }
