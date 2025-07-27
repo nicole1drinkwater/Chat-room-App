@@ -16,10 +16,6 @@ class MessageCard extends StatelessWidget {
     return FutureBuilder<User>(
       future: userStore.getUserData(message.senderID),
       builder: (context, userSnapshot) {
-        
-        if (userSnapshot.connectionState == ConnectionState.waiting) {
-          return const ListTile(title: Text("..."));
-        }
 
         final senderName = userSnapshot.data?.name ?? 'Unknown User';
 
