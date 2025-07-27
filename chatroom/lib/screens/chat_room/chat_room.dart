@@ -86,21 +86,18 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
 
       _messageController.clear();
 
-      FocusScope.of(context).unfocus();
-
-      scrollToBottom();
-     
+      FocusScope.of(context).unfocus();     
   }
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) => scrollToBottom());
     return Scaffold(
       appBar: AppBar(
         title: const Text('Chat Room'),
       ),
       body: Column(
         children: [
-          
           Expanded(
               child: Consumer<MessageStore>(
                 builder: (context, value, child) {
