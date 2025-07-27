@@ -13,4 +13,8 @@ class FirestoreService {
   static Future<void> addUser(User user) async {
     await ref.doc(user.id).set(user);
   }
+
+  static Future<QuerySnapshot<User>> getUsersOnce() async {
+    return ref.get();
+  }
  }

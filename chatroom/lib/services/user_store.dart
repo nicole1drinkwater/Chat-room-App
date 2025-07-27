@@ -4,10 +4,7 @@ import 'package:flutter/material.dart';
 import '../models/user.dart';
 
 class UserStore extends ChangeNotifier {
-  final List<User> _users = [
-    User(id: '1', name: 'Nicole Drinkwater'),
-    User(id: '2', name: 'Jane Doe'),
-  ];
+  final List<User> _users = [];
 
  get users => _users;
 
@@ -18,5 +15,16 @@ class UserStore extends ChangeNotifier {
   //updates the state within the app
   _users.add(user);
   notifyListeners();
+ }
+
+ void fetchUsersOnce() async {
+  if (users.length == 0) {
+    final snapshot = await FirestoreService.getUsersOnce();
+
+    for (var doc in snapshot.docs) {
+      _users.add(doc.data());
+    }
+    notifyListeners();
+  }
  }
 }
