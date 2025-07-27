@@ -19,6 +19,7 @@ class ChatRoomScreen extends StatefulWidget {
 
 class _ChatRoomScreenState extends State<ChatRoomScreen> {
   final _messageController = TextEditingController();
+  final _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -31,7 +32,20 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
   @override
   void dispose() {
     _messageController.dispose();
+    _scrollController.dispose(); 
     super.dispose();
+  }
+
+  void scrollToBottom() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+    if (_scrollController.hasClients) {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+    }
+  });
   }
 
   void handleSubmit() {
@@ -69,6 +83,13 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
         senderID: senderId,
         messageID: '',
       ));
+
+      _messageController.clear();
+
+      FocusScope.of(context).unfocus();
+
+      scrollToBottom();
+     
   }
 
   @override
@@ -84,6 +105,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
               child: Consumer<MessageStore>(
                 builder: (context, value, child) {
                   return ListView.builder(
+                    controller: _scrollController,
                     itemCount: value.messages.length,
                     itemBuilder: (_, index) {
                       final message = value.messages[index];
