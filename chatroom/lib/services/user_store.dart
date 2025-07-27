@@ -5,6 +5,9 @@ import '../models/user.dart';
 
 class UserStore extends ChangeNotifier {
   final List<User> _users = [];
+  User? _currentUser; 
+ 
+ User? get currentUser => _currentUser;
 
  get users => _users;
 
@@ -14,7 +17,8 @@ class UserStore extends ChangeNotifier {
 
   //updates the state within the app
   _users.add(user);
-  notifyListeners();
+
+  _currentUser = user;
  }
 
 //for when the chat room screen is first loaded
