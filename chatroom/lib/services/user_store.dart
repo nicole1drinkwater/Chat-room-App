@@ -7,4 +7,6 @@ class UserStore extends ChangeNotifier {
     User(id: '1', name: 'Nicole Drinkwater'),
     User(id: '2', name: 'Jane Doe'),
   ];
+
+ get users => _users;
 }
