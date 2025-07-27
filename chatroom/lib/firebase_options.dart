@@ -65,4 +65,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'chat-room-6e223.firebasestorage.app',
     iosBundleId: 'com.example.chatroom',
   );
+
 }
