@@ -1,6 +1,7 @@
 import 'package:chatroom/models/message.dart';
 import 'package:chatroom/models/user.dart';
 import 'package:chatroom/services/user_store.dart';
+import 'package:chatroom/shared/styled_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,11 +24,10 @@ class MessageCard extends StatelessWidget {
         final senderName = userSnapshot.data?.name ?? 'Unknown User';
 
         return ListTile(
-          title: Text(
+          title: StyledText(
             senderName,
-            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
-          subtitle: Text(message.messageContent),
+          subtitle: StyledText(message.messageContent),
         );
       },
     );
