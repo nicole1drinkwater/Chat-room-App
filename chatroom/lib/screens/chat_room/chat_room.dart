@@ -1,3 +1,4 @@
+import 'package:chatroom/screens/chat_room/message_card.dart';
 import 'package:chatroom/screens/sign_up/sign_up.dart';
 import 'package:chatroom/services/message_store.dart';
 import 'package:chatroom/services/user_store.dart';
@@ -85,13 +86,19 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
         children: [
           
           Expanded(
-            child: ListView(
-              padding: const EdgeInsets.all(16.0),
-              children: const [
-                Text('Messages will appear here'),
-              ],
+              child: Consumer<MessageStore>(
+                builder: (context, value, child) {
+                  return ListView.builder(
+                    itemCount: value.messages.length,
+                    itemBuilder: (_, index) {
+                      final message = messages[index];
+                      
+                      return MessageCard(message: message);
+                    }
+                  );
+                }
+              ),
             ),
-          ),
 
           Padding(
             padding: const EdgeInsets.all(9.0),
