@@ -27,7 +27,7 @@ class FirestoreService {
   }
 
   static Future<void> addMessage(Message message) async {
-    await messageRef.doc(message.messageID).set(message);
+    await messageRef.add(message);
   }
 
   static Future<QuerySnapshot<Message>> getMessagesOnce() async {

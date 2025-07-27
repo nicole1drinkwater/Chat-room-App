@@ -1,3 +1,4 @@
+import 'package:chatroom/services/message_store.dart';
 import 'package:chatroom/shared/styled_button.dart';
 import 'package:chatroom/shared/styled_text.dart';
 import 'package:chatroom/theme.dart';
@@ -16,8 +17,16 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(ChangeNotifierProvider(
-    create: (context) => UserStore(),
+  runApp(MultiProvider(
+    providers: [
+        ChangeNotifierProvider(
+          create: (context) => UserStore()
+        ),
+        
+        ChangeNotifierProvider(
+          create: (context) => MessageStore()
+        ),
+    ],
     child: const MyApp()));
 }
 
