@@ -46,7 +46,7 @@ class _SignInScreenState extends State<SignInScreen> {
     }
 
       Navigator.push(context, MaterialPageRoute(
-      builder: (ctx) => const ChatRoomScreen(),
+      builder: (context) => const ChatRoomScreen(),
     ));
 
   }
