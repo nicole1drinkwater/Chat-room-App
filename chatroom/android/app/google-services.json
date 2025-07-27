@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "355672894413",
+    "project_id": "chat-room-6e223",
+    "storage_bucket": "chat-room-6e223.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:355672894413:android:7a90790bcc46ca324f3284",
+        "android_client_info": {
+          "package_name": "com.example.chatroom"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWObsE9mGt7bWO8sccDzAUZKcR1s57LpQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
