@@ -25,14 +25,14 @@ class _SignInScreenState extends State<SignInScreen> {
   void handleSubmit() {
     if (_nameController.text.trim().isEmpty){
       
-      showDialog(context: context, builder: (ctx) {
+      showDialog(context: context, builder: (context) {
         return AlertDialog(
           title: const StyledHeading('Missing Name'),
           content: const StyledText('Please enter your name.'),
           actions: [
             StyledButton(
               onPressed: () {
-                Navigator.pop(ctx);
+                Navigator.pop(context);
               }, 
               child: const StyledHeading('Close'),
             ),
@@ -44,6 +44,11 @@ class _SignInScreenState extends State<SignInScreen> {
       return;
     
     }
+
+      Navigator.push(context, MaterialPageRoute(
+      builder: (ctx) => const ChatRoomScreen(),
+    ));
+
   }
 
   @override
@@ -69,9 +74,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
             StyledButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => const ChatRoomScreen(),
-                ));
+                handleSubmit();
               },
               child: const StyledText('Sign up'),
             ),
