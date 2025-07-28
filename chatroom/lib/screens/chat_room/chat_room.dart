@@ -101,9 +101,9 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                 builder: (context, snapshot) {
 
                   if (!snapshot.hasData || snapshot.data!.isEmpty) {
-        return const Center(child: StyledText("No messages yet."));
-      }
 
+                  return const Center(child: StyledText("No messages yet."));
+                }
 
                   final messages = snapshot.data!;
 
