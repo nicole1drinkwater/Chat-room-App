@@ -88,7 +88,6 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) => scrollToBottom());
 
     return Scaffold(
       appBar: AppBar(
@@ -97,13 +96,24 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
       body: Column(
         children: [
           Expanded(
-              child: Consumer<MessageStore>(
-                builder: (context, value, child) {
+              child: StreamBuilder<List<Message>> (
+                stream: Provider.of<MessageStore>(context).messagesStream,
+                builder: (context, snapshot) {
+
+                  if (!snapshot.hasData || snapshot.data!.isEmpty) {
+        return const Center(child: StyledText("No messages yet."));
+      }
+
+
+                  final messages = snapshot.data!;
+
+                  scrollToBottom();
+
                   return ListView.builder(
                     controller: _scrollController,
-                    itemCount: value.messages.length,
+                    itemCount: messages.length,
                     itemBuilder: (_, index) {
-                      final message = value.messages[index];
+                      final message = messages[index];
                       
                       return MessageCard(message: message,);
                     }

@@ -35,7 +35,7 @@ class FirestoreService {
   }
 
   static Stream<QuerySnapshot<Message>> getMessagesStream() {
-    return messageRef.orderBy('timeSent', descending: false).snapshots();
+    return messageRef.snapshots();
   }
   
  }
