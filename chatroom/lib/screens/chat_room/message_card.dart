@@ -31,6 +31,7 @@ class MessageCard extends StatelessWidget {
                 isSender ? CrossAxisAlignment.end : CrossAxisAlignment.start,
             children: [
 
+              //Maybe remove this condition : Bubble messages tjay display the msg and your name above the msg
               if (!isSender)
                 Padding(
                   padding: const EdgeInsets.only(bottom: 4.0),

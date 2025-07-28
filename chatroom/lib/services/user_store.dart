@@ -24,7 +24,7 @@ class UserStore extends ChangeNotifier {
 //for when the chat room screen is first loaded
  void fetchUsersOnce() async {
   if (users.length == 0) {
-    final snapshot = await FirestoreService.getUsersOnce();
+    final snapshot = await FirestoreService.fetchUsers();
 
     for (var doc in snapshot.docs) {
       _users.add(doc.data());
