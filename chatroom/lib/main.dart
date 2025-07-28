@@ -1,4 +1,5 @@
 import 'package:chatroom/services/message_store.dart';
+import 'package:chatroom/services/push_notifications.dart';
 import 'package:chatroom/shared/styled_button.dart';
 import 'package:chatroom/shared/styled_text.dart';
 import 'package:chatroom/theme.dart';
@@ -10,6 +11,12 @@ import 'package:provider/provider.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+
+Future _firebaseBackgroundMessage(RemoteMessage message) async {
+  if (message.notification != null) {
+    print("Some notification received");
+  }
+}
 
 @pragma('vm:entry-point')
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -23,8 +30,10 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+ 
+  PushNotifications.init();
 
-  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+  FirebaseMessaging.onBackgroundMessage(_firebaseBackgroundMessage);
 
   runApp(MultiProvider(
     providers: [
