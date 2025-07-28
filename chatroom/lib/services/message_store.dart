@@ -11,17 +11,21 @@ class MessageStore extends ChangeNotifier {
  void addMessage(Message message) {
   //saves to database
   FirestoreService.addMessage(message);
+
+  //updates the state within the app
+  //_messages.add(message);
+  notifyListeners();
  }
 
-//for when the chat room screen is first loaded
- Future<void> fetchMessagesOnce() async {
-  if (messages.length == 0) {
-    final snapshot = await FirestoreService.fetchMessages();
+  Stream<List<Message>> get messagesStream {
+    return FirestoreService.getMessagesStream().map((snapshot) {
+      _messages.clear();
+      
+      for (var doc in snapshot.docs) {
+        _messages.add(doc.data());
+      }
 
-    for (var doc in snapshot.docs) {
-      _messages.add(doc.data());
-    }
-    notifyListeners();
+      return _messages;
+    });
   }
- }
 }
