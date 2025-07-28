@@ -11,10 +11,6 @@ class MessageStore extends ChangeNotifier {
  void addMessage(Message message) {
   //saves to database
   FirestoreService.addMessage(message);
-
-  //updates the state within the app
-  //_messages.add(message);
-  notifyListeners();
  }
 
 //for when the chat room screen is first loaded

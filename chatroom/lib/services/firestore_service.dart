@@ -34,7 +34,8 @@ class FirestoreService {
     await messageRef.add(message);
   }
 
-  static Future<QuerySnapshot<Message>> fetchMessages() async {
-    return messageRef.get();
+  static Stream<QuerySnapshot<Message>> getMessagesStream() {
+    return messageRef.orderBy('timeSent', descending: false).snapshots();
   }
+  
  }
