@@ -19,6 +19,8 @@ class UserStore extends ChangeNotifier {
   _users.add(user);
 
   _currentUser = user;
+
+  notifyListeners();
  }
 
 //for when the chat room screen is first loaded
