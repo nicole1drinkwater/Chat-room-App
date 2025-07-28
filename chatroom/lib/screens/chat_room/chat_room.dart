@@ -23,13 +23,6 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
 
   @override
   void initState() {
-    Provider.of<MessageStore>(context, listen: false)
-    .fetchMessagesOnce()
-    .then((_) {
-      scrollToBottom();
-    });
-
-
     super.initState();
   }
 
