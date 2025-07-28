@@ -13,7 +13,7 @@ class MessageStore extends ChangeNotifier {
   FirestoreService.addMessage(message);
 
   //updates the state within the app
-  _messages.add(message);
+  //_messages.add(message);
   notifyListeners();
  }
 

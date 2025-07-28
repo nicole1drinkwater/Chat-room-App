@@ -29,7 +29,7 @@ void main() async {
   );
 
   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-    if (message.notification != null) {
+    if (message.notification != null) {      
       print("Some notification received");
       navigatorKey.currentState!.pushNamed("/chatroom", arguments: message);
     }
