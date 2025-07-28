@@ -20,7 +20,7 @@ class MessageStore extends ChangeNotifier {
 //for when the chat room screen is first loaded
  Future<void> fetchMessagesOnce() async {
   if (messages.length == 0) {
-    final snapshot = await FirestoreService.getMessagesOnce();
+    final snapshot = await FirestoreService.fetchMessages();
 
     for (var doc in snapshot.docs) {
       _messages.add(doc.data());
