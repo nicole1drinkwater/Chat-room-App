@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../../main.dart';
 import 'package:uuid/uuid.dart';
 import '../../models/user.dart';
+import '../../services/push_notifications.dart';
 import '../../services/user_store.dart';
 import '../../shared/styled_text.dart';
 import '../../shared/styled_button.dart';
@@ -28,7 +29,7 @@ class _SignInScreenState extends State<SignInScreen> {
     super.dispose();
   }
 
-  void handleSubmit() {
+  void handleSubmit() async {
     if (_nameController.text.trim().isEmpty){
       
       showDialog(context: context, builder: (context) {
@@ -51,10 +52,17 @@ class _SignInScreenState extends State<SignInScreen> {
     
     }
 
+    final fcmToken = await PushNotifications.init();
+
+    if (fcmToken == null) {
+      print("Failed to get FCM token.");
+    }
+
     Provider.of<UserStore>(context, listen: false) 
     .addUser(User(
       name: _nameController.text.trim(),
       id: uuid.v4(),
+      fcmToken: fcmToken,
     ));
 
       Navigator.push(context, MaterialPageRoute(

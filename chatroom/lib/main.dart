@@ -1,3 +1,4 @@
+import 'package:chatroom/screens/chat_room/chat_room.dart';
 import 'package:chatroom/services/message_store.dart';
 import 'package:chatroom/services/push_notifications.dart';
 import 'package:chatroom/shared/styled_button.dart';
@@ -12,16 +13,12 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
+final navigatorKey = GlobalKey<NavigatorState>();
+
 Future _firebaseBackgroundMessage(RemoteMessage message) async {
   if (message.notification != null) {
     print("Some notification received");
   }
-}
-
-@pragma('vm:entry-point')
-Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp();
-  print("Handling a background message: ${message.messageId}");
 }
 
 void main() async {
@@ -30,6 +27,13 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+    if (message.notification != null) {
+      print("Some notification received");
+      navigatorKey.currentState!.pushNamed("/chatroom", arguments: message);
+    }
+  });
  
   PushNotifications.init();
 
@@ -54,9 +58,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: navigatorKey,
       title: 'Chat Room',
       theme: primaryTheme,      
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      routes: {
+        '/chatroom': (context) => const ChatRoomScreen(),
+      },
     );
   }
 }
