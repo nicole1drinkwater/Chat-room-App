@@ -12,7 +12,6 @@ class MessageStore extends ChangeNotifier {
  get messages => _messages;
 
   MessageStore() {
-    print('sessint messages stream');
     messagesStream = FirestoreService.getMessagesStream().map((snapshot) {
       return snapshot.docs.map((doc) => doc.data()).toList();
     });
