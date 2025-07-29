@@ -28,13 +28,15 @@ class Message {
 
     final timestamp = data['timeSent'] as Timestamp;
 
-    Message user = Message(
+    Message message = Message(
       messageContent: data['messageContent'],
       senderID: data['senderID'],
       messageID: snapshot.id,
       timeSent: timestamp.toDate(),
     );
 
-    return user;
+    print('content' + message.messageContent);
+
+    return message;
   } 
 }
