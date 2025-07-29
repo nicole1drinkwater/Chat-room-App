@@ -13,10 +13,6 @@ class PushNotifications {
       provisional: false,
       sound: true,
     );
-
-    final token = await getFCMToken();
-
-    return token;
   }
 
     static Future<String?> getFCMToken({int maxRetries = 3}) async {

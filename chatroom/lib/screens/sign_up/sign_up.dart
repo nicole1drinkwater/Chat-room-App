@@ -49,10 +49,9 @@ class _SignInScreenState extends State<SignInScreen> {
       });
 
       return;
-    
     }
 
-    final fcmToken = await PushNotifications.init();
+    final fcmToken = await PushNotifications.getFCMToken();
 
     if (fcmToken == null) {
       print("Failed to get FCM token.");
