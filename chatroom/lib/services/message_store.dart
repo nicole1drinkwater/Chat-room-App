@@ -4,28 +4,22 @@ import 'package:flutter/material.dart';
 import '../models/message.dart';
 
 class MessageStore extends ChangeNotifier {
-  final List<Message> _messages = [];
+  
+ late final Stream<List<Message>> messagesStream;
+
+ final List<Message> _messages = [];
 
  get messages => _messages;
+
+  MessageStore() {
+    print('sessint messages stream');
+    messagesStream = FirestoreService.getMessagesStream().map((snapshot) {
+      return snapshot.docs.map((doc) => doc.data()).toList();
+    });
+  }
 
  void addMessage(Message message) {
   //saves to database
   FirestoreService.addMessage(message);
-
-  //updates the state within the app
-  //_messages.add(message);
-  notifyListeners();
  }
-
-  Stream<List<Message>> get messagesStream {
-    return FirestoreService.getMessagesStream().map((snapshot) {
-      _messages.clear();
-      
-      for (var doc in snapshot.docs) {
-        _messages.add(doc.data());
-      }
-
-      return _messages;
-    });
-  }
 }

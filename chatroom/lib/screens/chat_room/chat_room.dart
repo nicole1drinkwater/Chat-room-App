@@ -45,7 +45,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
   });
   }
 
-  void handleSubmit() {
+  void handleSubmit() async {
     if (_messageController.text.trim().isEmpty) {
       
       showDialog(context: context, builder: (context) {
@@ -83,8 +83,12 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
 
       _messageController.clear();
 
-      FocusScope.of(context).unfocus();     
-  }
+      await Future.delayed(const Duration(milliseconds: 100));
+
+      if (mounted) {
+          FocusScope.of(context).unfocus();
+        }    
+    }
 
   @override
   Widget build(BuildContext context) {
@@ -100,10 +104,13 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                 stream: Provider.of<MessageStore>(context).messagesStream,
                 builder: (context, snapshot) {
 
-                  if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
 
+                  if (!snapshot.hasData || snapshot.data!.isEmpty) {
                   return const Center(child: StyledText("No messages yet."));
-                }
+                  }
 
                   final messages = snapshot.data!;
 
@@ -114,7 +121,6 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                     itemCount: messages.length,
                     itemBuilder: (_, index) {
                       final message = messages[index];
-                      
                       return MessageCard(message: message,);
                     }
                   );
