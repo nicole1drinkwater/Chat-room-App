@@ -2,6 +2,7 @@ import 'package:chatroom/screens/chat_room/chat_room.dart';
 import 'package:chatroom/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../main.dart';
 import 'package:uuid/uuid.dart';
@@ -57,12 +58,17 @@ class _SignInScreenState extends State<SignInScreen> {
       print("Failed to get FCM token.");
     }
 
-    Provider.of<UserStore>(context, listen: false) 
-    .addUser(User(
+    final newUser = User(
       name: _nameController.text.trim(),
       id: uuid.v4(),
       fcmToken: fcmToken,
-    ));
+    );
+
+    Provider.of<UserStore>(context, listen: false) 
+    .addUser(newUser);
+
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('userID', newUser.id);
 
       Navigator.push(context, MaterialPageRoute(
       builder: (context) => const ChatRoomScreen(),
