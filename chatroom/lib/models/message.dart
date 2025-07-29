@@ -34,9 +34,7 @@ class Message {
       messageID: snapshot.id,
       timeSent: timestamp.toDate(),
     );
-
-    print('content' + message.messageContent);
-
+    
     return message;
   } 
 }
