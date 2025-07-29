@@ -16,6 +16,7 @@ import 'firebase_options.dart';
 final navigatorKey = GlobalKey<NavigatorState>();
 
 Future _firebaseBackgroundMessage(RemoteMessage message) async {
+  print("hello");
   if (message.notification != null) {
     print("Some notification received");
   }
@@ -38,6 +39,10 @@ void main() async {
   PushNotifications.init();
 
   FirebaseMessaging.onBackgroundMessage(_firebaseBackgroundMessage);
+
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    print("hi");
+  });
 
   runApp(MultiProvider(
     providers: [

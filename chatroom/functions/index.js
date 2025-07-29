@@ -44,7 +44,7 @@ exports.sendChatNotification = onDocumentCreated("messages/{messageId}", async (
   usersSnapshot.forEach((userDoc) => {
     const user = userDoc.data();
 
-    if (userDoc.id !== senderId && user.fcmToken) {
+    if (userDoc.id !== senderId && user.fcmToken != null) {
       tokens.push(user.fcmToken);
     }
   });
@@ -60,17 +60,31 @@ exports.sendChatNotification = onDocumentCreated("messages/{messageId}", async (
     notification: {
       title: `New message from ${senderName}`,
       body: newMessage.messageContent,
-      sound: "default",
     },
     data: {
       "click_action": "FLUTTER_NOTIFICATION_CLICK",
       "screen": "/chatroom",
     },
+    tokens: tokens,
   };
 
   try {
-    const response = await admin.messaging().sendToDevice(tokens, payload);
-    logger.info("Notifications sent successfully.", {response});
+    const response = await admin.messaging().sendEachForMulticast(payload);
+
+    if (response.failureCount > 0) {
+      response.responses.forEach((response, index) => {
+        if (!response.success) {
+          const failedToken = tokens[index];
+          logger.error(`Failed to send to token: ${failedToken}`, response.error);
+        }
+      });
+      logger.error("Error sending notifications:", error);
+    } 
+    else 
+    {
+        logger.info("Notifications sent successfully.", {response});
+    }
+
   } catch (error) {
     logger.error("Error sending notifications:", error);
   }
