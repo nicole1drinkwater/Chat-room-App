@@ -38,4 +38,14 @@ class FirestoreService {
     return messageRef.orderBy("timeSent").snapshots();
   }
   
+  static Future<void> updateUserStatus(String userId, String status) async {
+    await userRef.doc(userId).update({
+      'status': status,
+      'lastSeen': FieldValue.serverTimestamp(),
+    });
+  }
+
+  static Stream<QuerySnapshot<User>> getUsersStream() {
+    return userRef.snapshots();
+  }
  }
