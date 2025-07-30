@@ -1,6 +1,6 @@
 import 'package:chatroom/main.dart';
 import 'package:chatroom/screens/chat_room/chat_room.dart';
-import 'package:chatroom/screens/sign_up/sign_up.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -29,19 +29,25 @@ class _UserCheckerState extends State<UserChecker> {
 
     final userID = prefs.getString('userID');
 
+    if (!mounted) return;
+
     if (userID != null) {
       await userStore.loadUser(userID);
 
-      Navigator.pushReplacement(context, 
+      final RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
+
+      Navigator.pushReplacement(
+        context,
         MaterialPageRoute(builder: (context) => const ChatRoomScreen()),
       );
+
     }
     else {
-      Navigator.pushReplacement(context,
-       MaterialPageRoute(builder: (context) => const MyHomePage(title: 'Welcome Page'))
+        Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (context) => const MyHomePage(title: 'Welcome Page'))
        );
+      }  
     }
-  }
 
   @override
   Widget build(BuildContext context) {

@@ -23,6 +23,18 @@ Future _firebaseBackgroundMessage(RemoteMessage message) async {
   }
 }
 
+void navigateToChatRoom() {
+  final navigator = navigatorKey.currentState;
+
+  if (navigator != null) {
+    navigator.pushAndRemoveUntil(
+      MaterialPageRoute(builder: (context) => const UserChecker()),
+      (route) => false, 
+    );
+  }
+}
+
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -32,10 +44,8 @@ void main() async {
 
   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
     if (message.notification != null) {      
-      print("Some notification received");
-      navigatorKey.currentState!.pushNamed("/chatroom", arguments: message);
-    }
-  });
+      navigateToChatRoom();
+  }});
  
   PushNotifications.init();
 
