@@ -3,9 +3,11 @@ import 'package:chatroom/screens/sign_up/sign_up.dart';
 import 'package:chatroom/services/message_store.dart';
 import 'package:chatroom/services/user_store.dart';
 import 'package:chatroom/theme.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/message.dart';
+import '../../models/user.dart';
 import '../../services/firestore_service.dart';
 import '../../shared/styled_button.dart';
 import '../../shared/styled_text.dart';
@@ -44,6 +46,55 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
     else {
       userStore.updateUserStatus('offline');
     }
+  }
+
+  void showOnlineUsersDialog(BuildContext build) {
+    showDialog(context: context,
+     builder: (context) {
+      return AlertDialog(
+        title: const StyledText("Online Users"),
+        content: SizedBox(
+          width: double.maxFinite,
+          child: StreamBuilder<QuerySnapshot<User>> (
+            stream: FirestoreService.getUsersStream(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              
+              if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                return const StyledText("No users found.");
+              }
+
+              final users = snapshot.data!.docs.map((doc) => doc.data()).toList();
+
+              final onlineUsers = users.where((u) => u.status == 'online').toList();
+
+              return ListView.builder(
+                shrinkWrap: true,
+                itemCount: onlineUsers.length,
+                itemBuilder: (context, index) {
+                  final user = onlineUsers[index];
+                  return ListTile(
+                    title: StyledText(user.name),
+                    leading: const CircleAvatar(
+                      backgroundColor: Colors.green,
+                      radius: 8,
+                    ),
+                  );
+                },
+              );
+            },
+          ),
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(context),
+           child: const Text("Close"),
+           )
+        ],
+      );
+     }
+     );
   }
 
   @override
@@ -120,6 +171,15 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
     return Scaffold(
       appBar: AppBar(
         title: const Text('Chat Room'),
+
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.people),
+            onPressed: () {
+              showOnlineUsersDialog(context);
+            },
+          )
+        ]
       ),
       body: Column(
         children: [
