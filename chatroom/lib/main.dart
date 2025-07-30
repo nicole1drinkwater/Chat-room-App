@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
       navigatorKey: navigatorKey,
       title: 'Chat Room',
       theme: primaryTheme,      
-      home: const SignInScreen(),
+      home: const UserChecker(),
       routes: {
         '/chatroom': (context) => const ChatRoomScreen(),
       },
@@ -103,7 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
             
             StyledButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(
+                Navigator.pushReplacement(context, MaterialPageRoute(
                   builder: (context) => const SignInScreen(),
                 ));
               },

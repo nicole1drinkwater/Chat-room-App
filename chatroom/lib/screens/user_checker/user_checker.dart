@@ -38,7 +38,7 @@ class _UserCheckerState extends State<UserChecker> {
     }
     else {
       Navigator.pushReplacement(context,
-       MaterialPageRoute(builder: (context) => const MyHomePage(title: 'Flutter Demo Home Page'))
+       MaterialPageRoute(builder: (context) => const MyHomePage(title: 'Welcome Page'))
        );
     }
   }
