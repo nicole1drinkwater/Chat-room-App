@@ -70,7 +70,7 @@ class _SignInScreenState extends State<SignInScreen> {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('userID', newUser.id);
 
-      Navigator.push(context, MaterialPageRoute(
+      Navigator.pushReplacement(context, MaterialPageRoute(
       builder: (context) => const ChatRoomScreen(),
     ));
 
