@@ -10,6 +10,7 @@ import '../../services/firestore_service.dart';
 import '../../shared/styled_button.dart';
 import '../../shared/styled_text.dart';
 
+
 class ChatRoomScreen extends StatefulWidget {
   const ChatRoomScreen({super.key});
 
@@ -17,17 +18,40 @@ class ChatRoomScreen extends StatefulWidget {
   State<ChatRoomScreen> createState() => _ChatRoomScreenState();
 }
 
-class _ChatRoomScreenState extends State<ChatRoomScreen> {
+class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObserver{
+  late UserStore userStore;
+
   final _messageController = TextEditingController();
   final _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
+    
+    WidgetsBinding.instance.addObserver(this);
+
+    userStore = Provider.of<UserStore>(context, listen: false);
+    userStore.updateUserStatus('online');
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+
+    if (state == AppLifecycleState.resumed) {
+      userStore.updateUserStatus('online');
+    }
+    else {
+      userStore.updateUserStatus('offline');
+    }
   }
 
   @override
   void dispose() {
+    userStore.updateUserStatus('offline');
+
+    WidgetsBinding.instance.removeObserver(this);
+
     _messageController.dispose();
     _scrollController.dispose(); 
     super.dispose();
