@@ -58,4 +58,17 @@ class UserStore extends ChangeNotifier {
 
   }
 
+  Future<void> loadUser(String userId) async {
+    final userDoc = await FirestoreService.getSingleUser(userId);
+
+    if (userDoc.exists) {
+      final user = userDoc.data()!;
+
+      _currentUser = user;
+      
+      _users.add(user);
+
+      notifyListeners();
+    }
+  }
 }
