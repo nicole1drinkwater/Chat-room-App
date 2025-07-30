@@ -73,8 +73,11 @@ class UserStore extends ChangeNotifier {
   }
 
   Future<void> updateUserStatus(String status) async {
-    if (_currentUser != null) {
-      await FirestoreService.updateUserStatus(_currentUser!.id, status);
-    }
+  final user = _currentUser;
+
+  if (user != null) {
+    await FirestoreService.updateUserStatus(user.id, status);
   }
+
+}
 }

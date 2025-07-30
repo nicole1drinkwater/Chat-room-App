@@ -17,6 +17,8 @@ class User {
     return {
       "name": name,
       "fcmToken": fcmToken,
+      "status": status,
+      "lastSeen": FieldValue.serverTimestamp(),
     };
   }
 

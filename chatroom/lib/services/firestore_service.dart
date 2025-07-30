@@ -39,10 +39,21 @@ class FirestoreService {
   }
   
   static Future<void> updateUserStatus(String userId, String status) async {
-    await userRef.doc(userId).update({
-      'status': status,
-      'lastSeen': FieldValue.serverTimestamp(),
-    });
+     try {
+      await userRef.doc(userId).update({
+        'status': status,
+        'lastSeen': FieldValue.serverTimestamp(),
+      });
+    } on FirebaseException catch (e) {
+      if (e.code == 'not-found') {
+        print('User document not found for status update, ignoring: $userId');
+      } else {
+        print('An error occurred while updating user status: $e');
+        rethrow;
+      }
+    } catch (e) {
+      print('An unhandled error occurred during status update: $e');
+    }
   }
 
   static Stream<QuerySnapshot<User>> getUsersStream() {
