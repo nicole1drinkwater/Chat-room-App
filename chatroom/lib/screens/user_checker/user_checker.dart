@@ -34,8 +34,6 @@ class _UserCheckerState extends State<UserChecker> {
     if (userID != null) {
       await userStore.loadUser(userID);
 
-      final RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
-
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const ChatRoomScreen()),
