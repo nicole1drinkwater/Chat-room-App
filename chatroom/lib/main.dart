@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:chatroom/screens/sign_up/sign_up.dart';
 import 'package:chatroom/services/user_store.dart';
 import 'package:provider/provider.dart';
+import 'package:chatroom/screens/user_checker/user_checker.dart';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -66,7 +67,7 @@ class MyApp extends StatelessWidget {
       navigatorKey: navigatorKey,
       title: 'Chat Room',
       theme: primaryTheme,      
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const SignInScreen(),
       routes: {
         '/chatroom': (context) => const ChatRoomScreen(),
       },
