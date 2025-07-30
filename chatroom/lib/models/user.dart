@@ -1,5 +1,3 @@
-import 'dart:js_interop';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class User {
@@ -29,14 +27,14 @@ class User {
   ) {
     final data = snapshot.data()!;
 
-    final lastSeenTimestamp = data["lastSeen"] as Timestamp;
+    final lastSeenTimestamp = data["lastSeen"] as Timestamp?;
 
     User user = User(
       name: data['name'],
       id: snapshot.id,
       fcmToken: data['fcmToken'],
       status: data['status'] ?? 'offline',
-      lastSeen: lastSeenTimestamp.toDate(),
+      lastSeen: lastSeenTimestamp?.toDate() ?? DateTime.now(),
     );
 
     return user;
