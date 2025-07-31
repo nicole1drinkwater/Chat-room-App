@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:chatroom/screens/chat_room/message_card.dart';
 import 'package:chatroom/screens/sign_up/sign_up.dart';
 import 'package:chatroom/services/message_store.dart';
@@ -5,6 +7,7 @@ import 'package:chatroom/services/user_store.dart';
 import 'package:chatroom/theme.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import '../../models/message.dart';
 import '../../models/user.dart';
@@ -22,6 +25,7 @@ class ChatRoomScreen extends StatefulWidget {
 
 class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObserver{
   late UserStore userStore;
+  File ? _selectedImage;
 
   final _messageController = TextEditingController();
   final _scrollController = ScrollController();
@@ -34,6 +38,26 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
 
     userStore = Provider.of<UserStore>(context, listen: false);
     userStore.updateUserStatus('online');
+  }
+
+  Future _pickImageFromGallery() async {
+    final returnedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    if (returnedImage == null) return;
+
+    setState(() {
+      _selectedImage = File(returnedImage.path);
+    });
+  }
+
+  Future _pickImageFromCamera() async {
+    final returnedImage = await ImagePicker().pickImage(source: ImageSource.camera);
+
+    if (returnedImage == null) return;
+
+    setState(() {
+      _selectedImage = File(returnedImage.path);
+    });
   }
 
   @override
@@ -237,7 +261,9 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
 
                 IconButton(
                   onPressed: () {
-                    handleSubmit();
+                    //handleSubmit();
+                    //_pickImageFromGallery();
+                    _pickImageFromCamera();
                   },
                   icon: Icon(Icons.send, color: AppColors.primaryColor,),
                 ),
