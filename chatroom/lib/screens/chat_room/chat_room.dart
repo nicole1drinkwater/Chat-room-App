@@ -6,6 +6,7 @@ import 'package:chatroom/services/message_store.dart';
 import 'package:chatroom/services/user_store.dart';
 import 'package:chatroom/theme.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -40,14 +41,44 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
     userStore.updateUserStatus('online');
   }
 
+  void _showImageSourceDialog() {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return SafeArea(
+          child: Wrap(
+            children: <Widget>[
+              ListTile(
+                leading: const Icon(Icons.photo_library),
+                title: const Text('Photo Library'),
+                onTap: () {
+                  _pickImageFromGallery();
+                  
+                  Navigator.of(context).pop();
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.photo_camera),
+                title: const Text('Camera'),
+                onTap: () {
+                  _pickImageFromCamera();
+                  
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   Future _pickImageFromGallery() async {
     final returnedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
 
     if (returnedImage == null) return;
 
-    setState(() {
-      _selectedImage = File(returnedImage.path);
-    });
+    await _sendImage(File(returnedImage.path));
   }
 
   Future _pickImageFromCamera() async {
@@ -55,9 +86,45 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
 
     if (returnedImage == null) return;
 
-    setState(() {
-      _selectedImage = File(returnedImage.path);
-    });
+    await _sendImage(File(returnedImage.path));
+  }
+
+  Future<void> _sendImage(File imageFile) async {
+    final userStore = Provider.of<UserStore>(context, listen: false);
+    final currentUser = userStore.currentUser;
+
+    if (currentUser == null) return;
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Sending image...')),
+    );
+    
+    try {
+
+    final String fileName = '${currentUser.id}_${uuid.v4()}.jpg';
+    final Reference storageRef = FirebaseStorage.instance.ref().child('chat_images').child(fileName);
+
+    final TaskSnapshot snapshot = await storageRef.putFile(imageFile);
+
+    final String downloadUrl = await snapshot.ref.getDownloadURL();
+
+    final message = Message(
+      messageContent: '',
+      senderID: currentUser.id,
+      imageUrl: downloadUrl, 
+      messageType: 'image',
+      messageID: '',
+      timeSent: DateTime.now(),
+    );
+    
+    Provider.of<MessageStore>(context, listen: false).addMessage(message);
+
+  } catch (e) {
+    print("Error sending image: $e");
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Failed to send image.')),
+    );
+  }
   }
 
   @override
@@ -174,6 +241,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
 
       Provider.of<MessageStore>(context, listen: false) 
       .addMessage(Message(
+        messageType: 'Text',
         messageContent: _messageController.text,
         timeSent: DateTime.now(),
         senderID: senderId,
@@ -242,17 +310,32 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
               crossAxisAlignment: CrossAxisAlignment.center, 
 
               children: [
-                
+                  IconButton(
+                  onPressed: () {
+                    _showImageSourceDialog();
+                  }, 
+                  icon: const Icon(Icons.camera_alt_outlined),
+                  tooltip: 'Send an image',
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+
+                const SizedBox(width: 8),
+                          
                 Expanded(
                   child: TextField(
                     controller: _messageController,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: AppColors.inputTextColor,
                     ),
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       hintText: 'Enter a message...',
-                      contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+                      contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
                       isDense: true,
+                      suffixIcon: IconButton(
+                      icon: const Icon(Icons.attach_file),
+                      onPressed: _showImageSourceDialog, 
+                      tooltip: 'Attach an Image',
+                      ),
                     ),
                   ),
                 ),
@@ -261,9 +344,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
 
                 IconButton(
                   onPressed: () {
-                    //handleSubmit();
-                    //_pickImageFromGallery();
-                    _pickImageFromCamera();
+                    handleSubmit();
                   },
                   icon: Icon(Icons.send, color: AppColors.primaryColor,),
                 ),
