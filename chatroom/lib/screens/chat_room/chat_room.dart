@@ -41,38 +41,6 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
     userStore.updateUserStatus('online');
   }
 
-  void _showImageSourceDialog() {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return SafeArea(
-          child: Wrap(
-            children: <Widget>[
-              ListTile(
-                leading: const Icon(Icons.photo_library),
-                title: const Text('Photo Library'),
-                onTap: () {
-                  _pickImageFromGallery();
-                  
-                  Navigator.of(context).pop();
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.photo_camera),
-                title: const Text('Camera'),
-                onTap: () {
-                  _pickImageFromCamera();
-                  
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
   Future _pickImageFromGallery() async {
     final returnedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
 
@@ -310,15 +278,6 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
               crossAxisAlignment: CrossAxisAlignment.center, 
 
               children: [
-                  IconButton(
-                  onPressed: () {
-                    _showImageSourceDialog();
-                  }, 
-                  icon: const Icon(Icons.camera_alt_outlined),
-                  tooltip: 'Send an image',
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-
                 const SizedBox(width: 8),
                           
                 Expanded(
@@ -331,14 +290,23 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
                       hintText: 'Enter a message...',
                       contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
                       isDense: true,
-                      suffixIcon: IconButton(
-                      icon: const Icon(Icons.attach_file),
-                      onPressed: _showImageSourceDialog, 
-                      tooltip: 'Attach an Image',
+
+                      suffixIcon: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          IconButton(icon: const Icon(Icons.attach_file),
+                          onPressed: _pickImageFromGallery,
+                          tooltip: 'Choose from the gallery',
+                          ),
+                          IconButton(icon: const Icon(Icons.camera_alt_outlined),
+                          onPressed: _pickImageFromCamera,
+                          tooltip: 'Take a picture',
+                          )
+                        ],
+                      ),
                       ),
                     ),
                   ),
-                ),
                 
                 const SizedBox(width: 8), 
 
