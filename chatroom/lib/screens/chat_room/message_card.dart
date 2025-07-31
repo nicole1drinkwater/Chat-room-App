@@ -22,6 +22,44 @@ class MessageCard extends StatelessWidget {
 
         final senderName = userSnapshot.data?.name ?? 'Unknown User';
 
+        Widget messageBody;
+        
+        if (message.messageType == 'image' && message.imageUrl != null) {
+          messageBody = Container(
+            constraints: BoxConstraints(
+              maxWidth: MediaQuery.of(context).size.width * 0.07,
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(15.0),
+              child: Image.network(
+                message.imageUrl!, 
+
+                loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Center(
+                    child: CircularProgressIndicator(
+                      value: loadingProgress.expectedTotalBytes != null ? loadingProgress.cumulativeBytesLoaded 
+                      / loadingProgress.expectedTotalBytes! : null
+                    ),
+                  );
+                },
+              ),
+            ),
+          );
+        }
+        else {
+          messageBody = BubbleSpecialThree(
+            text: message.messageContent,
+            color: isSender ? Theme.of(context).colorScheme.primary : const Color.fromRGBO(232, 232, 238, 1),
+            tail: true,
+            isSender: isSender,
+            textStyle: TextStyle(
+              color: isSender ? Colors.white : Colors.black,
+              fontSize: 16,
+            ),
+          );
+        }
+
         return Padding(
 
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -38,18 +76,7 @@ class MessageCard extends StatelessWidget {
                   child: StyledText(senderName), 
                 ),
               
-              BubbleSpecialThree(
-                text: message.messageContent,
-                color: isSender
-                    ? Theme.of(context).colorScheme.primary 
-                    : const Color.fromRGBO(232, 232, 238, 1), 
-                tail: true,
-                isSender: isSender,
-                textStyle: TextStyle(
-                  color: isSender ? Colors.white : Colors.black,
-                  fontSize: 16,
-                ),
-              ),
+              messageBody,
             ],
           ),
         );
