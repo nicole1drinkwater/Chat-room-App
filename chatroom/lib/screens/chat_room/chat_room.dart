@@ -261,16 +261,16 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
                   return const Center(child: StyledText("No messages yet."));
                   }
 
-                  scrollToBottom();
-
                   final messages = snapshot.data!;
 
+                  scrollToBottom();
+                       
                   return ListView.builder(
                     controller: _scrollController,
                     itemCount: messages.length,
                     itemBuilder: (_, index) {
                       final message = messages[index];
-                      return MessageCard(message: message,);
+                      return MessageCard(message: message,); 
                     }
                   );
                 }
