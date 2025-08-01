@@ -27,7 +27,7 @@ class MessageCard extends StatelessWidget {
         if (message.messageType == 'image' && message.imageUrl != null) {
           messageBody = Container(
             constraints: BoxConstraints(
-              maxWidth: MediaQuery.of(context).size.width * 0.07,
+              maxWidth: MediaQuery.of(context).size.width * 0.7,
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(15.0),
