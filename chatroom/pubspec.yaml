@@ -48,7 +48,7 @@ dependencies:
   firebase_storage: ^11.7.7
   cached_network_image: ^3.4.0
   sqflite_common_ffi: 2.3.3
-  sqlite3_flutter_libs: ^0.5.38
+  sqlite3_flutter_libs: 0.5.32
 
 dev_dependencies:
   flutter_test:
