@@ -44,6 +44,11 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
     userStore.updateUserStatus('online');
 
     _scrollController.addListener(_scrollListener);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      userStore.fetchUsersOnce();
+    });
+
   }
 
     void _scrollListener() {
@@ -192,8 +197,6 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
 
   @override
   void dispose() {
-    userStore.updateUserStatus('offline');
-
     WidgetsBinding.instance.removeObserver(this);
 
     _messageController.dispose();

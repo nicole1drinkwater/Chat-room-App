@@ -40,7 +40,7 @@ void main() async {
 
   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
     if (message.notification != null) {      
-      navigatorKey.currentState!.pushNamed("/chatroom", arguments: message);
+      navigatorKey.currentState!.pushNamedAndRemoveUntil("/", (route) => false);
   }});
  
   PushNotifications.init();
@@ -73,9 +73,10 @@ class MyApp extends StatelessWidget {
       navigatorKey: navigatorKey,
       title: 'Chat Room',
       theme: primaryTheme,      
-      home: const UserChecker(),
+      initialRoute: "/",
       routes: {
         '/chatroom': (context) => const ChatRoomScreen(),
+        '/': (context) => const UserChecker(),
       },
     );
   }
