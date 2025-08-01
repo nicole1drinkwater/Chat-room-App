@@ -16,11 +16,6 @@ class MessageCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {    
-    imageBuilder: (context, imageProvider) {
-      onImageLoaded?.call();
-      return Image(image: imageProvider, fit: BoxFit.cover);
-    };
-
     final userStore = context.watch<UserStore>();
     final currentUser = userStore.currentUser;
     final bool isSender = currentUser?.id == message.senderID;
