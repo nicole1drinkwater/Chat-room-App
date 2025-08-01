@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chatroom/models/message.dart';
 import 'package:chatroom/models/user.dart';
 import 'package:chatroom/services/user_store.dart';
@@ -31,21 +32,22 @@ class MessageCard extends StatelessWidget {
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(15.0),
-              child: Image.network(
-                message.imageUrl!, 
-
-                loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                  if (loadingProgress == null) return child;
-                  return Center(
-                    child: CircularProgressIndicator(
-                      value: loadingProgress.expectedTotalBytes != null ? loadingProgress.cumulativeBytesLoaded 
-                      / loadingProgress.expectedTotalBytes! : null
-                    ),
-                  );
-                },
+              child: CachedNetworkImage(
+                imageUrl: message.imageUrl!, 
+                placeholder: (context, url) => Container(
+                height: 250,
+                width: 250,
+                color: Colors.grey[300],
+                child: const Center(
+                  child: CircularProgressIndicator(),
+                ),
+                ),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+                fit: BoxFit.cover,
               ),
-            ),
-          );
+
+              ),
+            );
         }
         else {
           messageBody = BubbleSpecialThree(
