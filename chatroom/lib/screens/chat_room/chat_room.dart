@@ -87,6 +87,10 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
     
     Provider.of<MessageStore>(context, listen: false).addMessage(message);
 
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Image sent successfully! Please wait a moment for it to appear...')),
+    );
+    
   } catch (e) {
     print("Error sending image: $e");
     ScaffoldMessenger.of(context).showSnackBar(
@@ -101,6 +105,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
 
     if (state == AppLifecycleState.resumed) {
       userStore.updateUserStatus('online');
+      scrollToBottom();
     }
     else {
       userStore.updateUserStatus('offline');
@@ -256,9 +261,9 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
                   return const Center(child: StyledText("No messages yet."));
                   }
 
-                  final messages = snapshot.data!;
-
                   scrollToBottom();
+
+                  final messages = snapshot.data!;
 
                   return ListView.builder(
                     controller: _scrollController,
@@ -277,9 +282,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center, 
 
-              children: [
-                const SizedBox(width: 8),
-                          
+              children: [                          
                 Expanded(
                   child: TextField(
                     controller: _messageController,
