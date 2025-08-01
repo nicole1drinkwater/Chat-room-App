@@ -4,6 +4,7 @@ import 'package:chatroom/models/user.dart';
 import 'package:chatroom/services/user_store.dart';
 import 'package:chatroom/shared/styled_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:chat_bubbles/chat_bubbles.dart';
 
@@ -14,7 +15,12 @@ class MessageCard extends StatelessWidget {
   const MessageCard({super.key, required this.message, this.onImageLoaded});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {    
+    imageBuilder: (context, imageProvider) {
+      onImageLoaded?.call();
+      return Image(image: imageProvider, fit: BoxFit.cover);
+    };
+
     final userStore = context.watch<UserStore>();
     final currentUser = userStore.currentUser;
     final bool isSender = currentUser?.id == message.senderID;
