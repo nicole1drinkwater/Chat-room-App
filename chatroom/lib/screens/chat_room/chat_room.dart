@@ -32,6 +32,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
   final _scrollController = ScrollController();
 
   bool _isAtBottom = true;
+  int _previousMessageCount = 0;
 
   @override
   void initState() {
@@ -45,20 +46,24 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
     _scrollController.addListener(_scrollListener);
   }
 
-  void _scrollListener() {
-  if (_scrollController.position.atEdge) {
+    void _scrollListener() {
+    if (!_scrollController.hasClients) return;
+    if (_scrollController.position.atEdge) {
       if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
-        setState(() {
-          _isAtBottom = true;
-        });
+        if (!_isAtBottom) setState(() => _isAtBottom = true);
       }
     } else {
-      setState(() {
-        _isAtBottom = false;
-      });
+      if (_isAtBottom) setState(() => _isAtBottom = false);
     }
   }
 
+  void scrollToBottom() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted && _scrollController.hasClients) {
+        _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+      }
+    });
+  }
 
   Future _pickImageFromGallery() async {
     final returnedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -124,6 +129,11 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
 
     if (state == AppLifecycleState.resumed) {
       userStore.updateUserStatus('online');
+      
+      setState(() {
+        _isAtBottom = true;
+      });
+
       scrollToBottom();
     }
     else {
@@ -190,20 +200,6 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
     _scrollController.dispose(); 
     super.dispose();
   }
-
-  void scrollToBottom() {
-  WidgetsBinding.instance.addPostFrameCallback((_) {
-    if (mounted && _scrollController.hasClients) {
-      _scrollController.animateTo(
-        _scrollController.position.maxScrollExtent,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeOut,
-        );
-      }
-    });
-  }
-
-
 
   void handleSubmit() async {
     if (_messageController.text.trim().isEmpty) {
@@ -282,25 +278,33 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
                   return const Center(child: StyledText("No messages yet."));
                   }
 
-                  if (_isAtBottom) {
-                    scrollToBottom();
-                  }
-
                   final messages = snapshot.data!;
-                  return ListView.builder(
-                    controller: _scrollController,
-                    itemCount: messages.length,
-                    itemBuilder: (_, index) {
-                      final message = messages[index];
+
+                if (_isAtBottom && messages.length > _previousMessageCount) {
+                  scrollToBottom();
+                }
+
+                _previousMessageCount = messages.length;
+
+                return SingleChildScrollView(
+                  controller: _scrollController,
+                  child: Column(
+                    children: messages.map((message) {
                       return MessageCard(
                         message: message,
-                        onImageLoaded: scrollToBottom,
-                        );
-                    }
-                  );
-                }
-              ),
+
+                          onImageLoaded: () {
+                          if (_isAtBottom) {
+                            scrollToBottom();
+                          }
+                        },
+                      );
+                    }).toList(),
+                  ),
+                );
+              },
             ),
+          ),
 
           Padding(
             padding: const EdgeInsets.all(9.0),
