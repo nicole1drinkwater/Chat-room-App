@@ -31,6 +31,8 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
   final _messageController = TextEditingController();
   final _scrollController = ScrollController();
 
+  bool _isAtBottom = true;
+
   @override
   void initState() {
     super.initState();
@@ -39,7 +41,24 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
 
     userStore = Provider.of<UserStore>(context, listen: false);
     userStore.updateUserStatus('online');
+
+    _scrollController.addListener(_scrollListener);
   }
+
+  void _scrollListener() {
+  if (_scrollController.position.atEdge) {
+      if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
+        setState(() {
+          _isAtBottom = true;
+        });
+      }
+    } else {
+      setState(() {
+        _isAtBottom = false;
+      });
+    }
+  }
+
 
   Future _pickImageFromGallery() async {
     final returnedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -173,16 +192,18 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
   }
 
   void scrollToBottom() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-    if (_scrollController.hasClients) {
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    if (mounted && _scrollController.hasClients) {
       _scrollController.animateTo(
         _scrollController.position.maxScrollExtent,
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeOut,
-      );
-    }
-  });
+        );
+      }
+    });
   }
+
+
 
   void handleSubmit() async {
     if (_messageController.text.trim().isEmpty) {
@@ -261,16 +282,20 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
                   return const Center(child: StyledText("No messages yet."));
                   }
 
-                  final messages = snapshot.data!;
+                  if (_isAtBottom) {
+                    scrollToBottom();
+                  }
 
-                  scrollToBottom();
-                       
+                  final messages = snapshot.data!;
                   return ListView.builder(
                     controller: _scrollController,
                     itemCount: messages.length,
                     itemBuilder: (_, index) {
                       final message = messages[index];
-                      return MessageCard(message: message,); 
+                      return MessageCard(
+                        message: message,
+                        onImageLoaded: scrollToBottom,
+                        );
                     }
                   );
                 }
