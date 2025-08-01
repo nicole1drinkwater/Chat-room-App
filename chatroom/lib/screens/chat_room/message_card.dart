@@ -9,7 +9,9 @@ import 'package:chat_bubbles/chat_bubbles.dart';
 
 class MessageCard extends StatelessWidget {
   final Message message;
-  const MessageCard({super.key, required this.message});
+  final VoidCallback? onImageLoaded;
+
+  const MessageCard({super.key, required this.message, this.onImageLoaded});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +45,14 @@ class MessageCard extends StatelessWidget {
                 ),
                 ),
                 errorWidget: (context, url, error) => const Icon(Icons.error),
-                fit: BoxFit.cover,
+                imageBuilder: (context, imageProvider) {
+                  onImageLoaded?.call();
+
+                  return Image(
+                    image: imageProvider,
+                    fit: BoxFit.cover,
+                  );
+                },
               ),
 
               ),
