@@ -75,7 +75,7 @@ class MessageCard extends StatelessWidget {
             tail: true,
             isSender: isSender,
             textStyle: TextStyle(
-              color: isSender ? Colors.white : const Color.fromRGBO(0, 97, 166, 1),
+              color: isSender ? Colors.white : Colors.black,
               fontSize: 16,
             ),
           );
