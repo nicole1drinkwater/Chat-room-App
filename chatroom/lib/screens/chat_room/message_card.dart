@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chatroom/models/message.dart';
 import 'package:chatroom/models/user.dart';
 import 'package:chatroom/services/user_store.dart';
-import 'package:chatroom/shared/styled_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:chat_bubbles/chat_bubbles.dart';
@@ -22,43 +21,53 @@ class MessageCard extends StatelessWidget {
     return FutureBuilder<User>(
       future: userStore.getUserData(message.senderID),
       builder: (context, userSnapshot) {
-
         final senderName = userSnapshot.data?.name ?? 'Unknown User';
 
         Widget messageBody;
         
         if (message.messageType == 'image' && message.imageUrl != null) {
-          messageBody = Container(
+          
+          // First, create the bubble itself, without any position controls.
+          final imageBubble = Container(
             constraints: BoxConstraints(
               maxWidth: MediaQuery.of(context).size.width * 0.7,
             ),
-            child: ClipRRect(
+            padding: const EdgeInsets.all(5.0),
+            decoration: BoxDecoration(
+              color: isSender ? const Color.fromRGBO(0, 80, 180, 1) : const Color.fromRGBO(230, 230, 230, 1),
               borderRadius: BorderRadius.circular(15.0),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10.0),
               child: CachedNetworkImage(
-                imageUrl: message.imageUrl!, 
+                imageUrl: message.imageUrl!,
                 placeholder: (context, url) => Container(
-                height: 250,
-                width: 250,
-                color: Colors.grey[300],
-                child: const Center(
-                  child: CircularProgressIndicator(),
-                ),
+                  height: 250,
+                  width: 250,
+                  color: Colors.grey[300],
+                  child: const Center(child: CircularProgressIndicator()),
                 ),
                 errorWidget: (context, url, error) => const Icon(Icons.error),
                 imageBuilder: (context, imageProvider) {
                   onImageLoaded?.call();
-
                   return Image(
                     image: imageProvider,
-                    fit: BoxFit.cover,
+                    fit: BoxFit.contain,
                   );
                 },
               ),
+            ),
+          );
 
-              ),
-            );
-        }
-        else {
+          messageBody = Align(
+            alignment: isSender ? Alignment.centerRight : Alignment.centerLeft,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: imageBubble,
+            ),
+          );
+
+        } else {
           messageBody = BubbleSpecialThree(
             text: message.messageContent,
             color: isSender ? const Color.fromRGBO(0, 80, 180, 1) : const Color.fromRGBO(230, 230, 230, 1),
@@ -72,25 +81,19 @@ class MessageCard extends StatelessWidget {
         }
 
         return Padding(
-
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          padding: const EdgeInsets.symmetric(vertical: 5.0), 
           child: Column(
-
             crossAxisAlignment:
                 isSender ? CrossAxisAlignment.end : CrossAxisAlignment.start,
             children: [
-
-              //Maybe remove this condition : Bubble messages tjay display the msg and your name above the msg
               if (!isSender)
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 4.0),
-                  
-                    child: Text(
+                  padding: const EdgeInsets.only(bottom: 4.0, left: 12.0),
+                  child: Text(
                     senderName,
                     style: const TextStyle(color: Colors.black),
-                  ), 
-
-                ),    
+                  ),
+                ),
               messageBody,
             ],
           ),
