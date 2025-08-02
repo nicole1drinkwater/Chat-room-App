@@ -61,7 +61,7 @@ class MessageCard extends StatelessWidget {
         else {
           messageBody = BubbleSpecialThree(
             text: message.messageContent,
-            color: isSender ? const Color.fromRGBO(0, 123, 255, 1) : const Color.fromRGBO(245, 244, 242, 1),
+            color: isSender ? const Color.fromRGBO(0, 80, 180, 1) : const Color.fromRGBO(230, 230, 230, 1),
             tail: true,
             isSender: isSender,
             textStyle: TextStyle(
@@ -84,9 +84,13 @@ class MessageCard extends StatelessWidget {
               if (!isSender)
                 Padding(
                   padding: const EdgeInsets.only(bottom: 4.0),
-                  child: Text(senderName), 
-                ),
-              
+                  
+                    child: Text(
+                    senderName,
+                    style: const TextStyle(color: Colors.black),
+                  ), 
+
+                ),    
               messageBody,
             ],
           ),
