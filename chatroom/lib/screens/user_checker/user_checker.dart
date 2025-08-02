@@ -47,8 +47,6 @@ class _UserCheckerState extends State<UserChecker> {
               .update({'fcmToken': newFcmToken});
       }
 
-      FlutterNativeSplash.remove();
-
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const ChatRoomScreen()),
@@ -56,12 +54,12 @@ class _UserCheckerState extends State<UserChecker> {
 
     }
     else {
-        FlutterNativeSplash.remove();
         Navigator.pushReplacement(context,
         MaterialPageRoute(builder: (context) => const MyHomePage(title: 'Welcome Page'))
        );
       }  
 
+    FlutterNativeSplash.remove();
     }
 
   @override
