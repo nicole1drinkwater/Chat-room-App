@@ -4,7 +4,6 @@ import 'package:chatroom/models/user.dart';
 import 'package:chatroom/services/user_store.dart';
 import 'package:chatroom/shared/styled_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:chat_bubbles/chat_bubbles.dart';
 
@@ -62,7 +61,7 @@ class MessageCard extends StatelessWidget {
         else {
           messageBody = BubbleSpecialThree(
             text: message.messageContent,
-            color: isSender ? Theme.of(context).colorScheme.primary : const Color.fromRGBO(232, 232, 238, 1),
+            color: isSender ? const Color.fromRGBO(0, 123, 255, 1) : const Color.fromRGBO(245, 244, 242, 1),
             tail: true,
             isSender: isSender,
             textStyle: TextStyle(
@@ -85,7 +84,7 @@ class MessageCard extends StatelessWidget {
               if (!isSender)
                 Padding(
                   padding: const EdgeInsets.only(bottom: 4.0),
-                  child: StyledText(senderName), 
+                  child: Text(senderName), 
                 ),
               
               messageBody,
