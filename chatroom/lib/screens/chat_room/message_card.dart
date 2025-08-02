@@ -29,7 +29,6 @@ class MessageCard extends StatelessWidget {
         
         if (message.messageType == 'image' && message.imageUrl != null) {
           
-          // First, create the bubble itself, without any position controls.
           final imageBubble = Container(
             constraints: BoxConstraints(
               maxWidth: MediaQuery.of(context).size.width * 0.7,
