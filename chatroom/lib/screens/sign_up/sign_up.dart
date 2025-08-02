@@ -64,7 +64,7 @@ class _SignInScreenState extends State<SignInScreen> {
       fcmToken: fcmToken,
     );
 
-    Provider.of<UserStore>(context, listen: false) 
+    await Provider.of<UserStore>(context, listen: false) 
     .addUser(newUser);
 
     final prefs = await SharedPreferences.getInstance();

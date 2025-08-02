@@ -2,6 +2,7 @@ import 'package:chatroom/main.dart';
 import 'package:chatroom/screens/chat_room/chat_room.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -45,6 +46,8 @@ class _UserCheckerState extends State<UserChecker> {
         MaterialPageRoute(builder: (context) => const MyHomePage(title: 'Welcome Page'))
        );
       }  
+
+    FlutterNativeSplash.remove();
     }
 
   @override
