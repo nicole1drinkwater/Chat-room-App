@@ -290,7 +290,9 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
                   }
 
                   if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return const Center(child: StyledText("No messages yet."));
+                  return const Center(child: Text("No messages yet.",
+                    style: TextStyle(
+                    color: Colors.black)));
                   }
 
                   final messages = snapshot.data!;
