@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chatroom/models/message.dart';
 import 'package:chatroom/models/user.dart';
 import 'package:chatroom/services/user_store.dart';
+import 'package:chatroom/shared/styled_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:chat_bubbles/chat_bubbles.dart';
@@ -21,12 +22,14 @@ class MessageCard extends StatelessWidget {
     return FutureBuilder<User>(
       future: userStore.getUserData(message.senderID),
       builder: (context, userSnapshot) {
+
         final senderName = userSnapshot.data?.name ?? 'Unknown User';
 
         Widget messageBody;
         
         if (message.messageType == 'image' && message.imageUrl != null) {
           
+          // First, create the bubble itself, without any position controls.
           final imageBubble = Container(
             constraints: BoxConstraints(
               maxWidth: MediaQuery.of(context).size.width * 0.7,
