@@ -35,7 +35,7 @@ class MessageCard extends StatelessWidget {
             ),
             padding: const EdgeInsets.all(5.0),
             decoration: BoxDecoration(
-              color: isSender ? const Color.fromRGBO(0, 80, 180, 1) : const Color.fromRGBO(230, 230, 230, 1),
+              color: isSender ? const Color.fromRGBO(0, 97, 166, 1) : Colors.white,
               borderRadius: BorderRadius.circular(15.0),
             ),
             child: ClipRRect(
@@ -71,11 +71,11 @@ class MessageCard extends StatelessWidget {
         } else {
           messageBody = BubbleSpecialThree(
             text: message.messageContent,
-            color: isSender ? const Color.fromRGBO(0, 80, 180, 1) : const Color.fromRGBO(230, 230, 230, 1),
+            color: isSender ? const Color.fromRGBO(0, 97, 166, 1) : Colors.white,
             tail: true,
             isSender: isSender,
             textStyle: TextStyle(
-              color: isSender ? Colors.white : Colors.black,
+              color: isSender ? Colors.white : const Color.fromRGBO(0, 97, 166, 1),
               fontSize: 16,
             ),
           );
