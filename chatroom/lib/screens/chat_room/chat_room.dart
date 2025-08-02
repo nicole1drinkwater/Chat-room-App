@@ -150,7 +150,13 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
     showDialog(context: context,
      builder: (context) {
       return AlertDialog(
-        title: const StyledText("Online Users"),
+        title: const Text("Online Users",
+        style: TextStyle(
+            fontSize: 18, 
+            fontWeight: FontWeight.bold, 
+            color: Colors.black, 
+          ),
+        ),
         content: SizedBox(
           width: double.maxFinite,
           child: StreamBuilder<QuerySnapshot<User>> (
@@ -161,7 +167,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
               }
               
               if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                return const StyledText("No users found.");
+                return const Text("No users found.");
               }
 
               final users = snapshot.data!.docs.map((doc) => doc.data()).toList();
@@ -174,7 +180,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
                 itemBuilder: (context, index) {
                   final user = onlineUsers[index];
                   return ListTile(
-                    title: StyledText(user.name),
+                    title: Text(user.name, style: const TextStyle(color: Colors.black)),
                     leading: const CircleAvatar(
                       backgroundColor: Colors.green,
                       radius: 8,
@@ -187,7 +193,11 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
         ),
         actions: [
           TextButton(onPressed: () => Navigator.pop(context),
-           child: const Text("Close"),
+           child: const Text("Close",
+                style: TextStyle(
+                color: Color.fromRGBO(40, 145, 210, 1),
+              ),
+),
            )
         ],
       );
@@ -255,7 +265,9 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Chat Room'),
+        title: const Text('Chat room',
+        style: TextStyle(fontWeight: FontWeight.bold),
+        ),
 
         actions: [
           IconButton(
