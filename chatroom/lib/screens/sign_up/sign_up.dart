@@ -23,6 +23,7 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   final _nameController = TextEditingController();
+  bool _isSigningUp = false;
 
   @override
   void dispose() {
@@ -31,6 +32,8 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   void handleSubmit() async {
+    if (_isSigningUp) return;
+
     if (_nameController.text.trim().isEmpty){
       
       showDialog(context: context, builder: (context) {
@@ -52,28 +55,43 @@ class _SignInScreenState extends State<SignInScreen> {
       return;
     }
 
-    final fcmToken = await PushNotifications.getFCMToken();
+    setState(() {
+      _isSigningUp = true;
+    });
 
-    if (fcmToken == null) {
-      print("Failed to get FCM token.");
-    }
+    try {
+      final fcmToken = await PushNotifications.getFCMToken();
 
-    final newUser = User(
-      name: _nameController.text.trim(),
-      id: uuid.v4(),
-      fcmToken: fcmToken,
-    );
+      if (fcmToken == null) {
+        print("Failed to get FCM token.");
+      }
 
-    await Provider.of<UserStore>(context, listen: false) 
-    .addUser(newUser);
+      final newUser = User(
+        name: _nameController.text.trim(),
+        id: uuid.v4(),
+        fcmToken: fcmToken,
+      );
 
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('userID', newUser.id);
+      await Provider.of<UserStore>(context, listen: false) 
+      .addUser(newUser);
 
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('userID', newUser.id);
+
+      if (mounted) {
       Navigator.pushReplacement(context, MaterialPageRoute(
-      builder: (context) => const ChatRoomScreen(),
-    ));
-
+        builder: (context) => const ChatRoomScreen(),
+      ));
+      }
+    } catch (e) {
+      print("An error occurred during sign up: $e");
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isSigningUp = false;
+        });
+      }
+    }
   }
 
   @override
