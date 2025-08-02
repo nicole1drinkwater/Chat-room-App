@@ -9,6 +9,7 @@ import 'package:chatroom/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:chatroom/screens/sign_up/sign_up.dart';
 import 'package:chatroom/services/user_store.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';
 import 'package:chatroom/screens/user_checker/user_checker.dart';
 
@@ -27,6 +28,9 @@ Future _firebaseBackgroundMessage(RemoteMessage message) async {
 }
 
 void main() async {
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  
   if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;

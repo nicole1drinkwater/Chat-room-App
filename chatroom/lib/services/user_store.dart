@@ -11,9 +11,9 @@ class UserStore extends ChangeNotifier {
 
   get users => _users;
 
- void addUser(User user) {
+ Future<void> addUser(User user) async {
   //saves to database
-  FirestoreService.addUser(user);
+  await FirestoreService.addUser(user);
 
   //updates the state within the app
   _users.add(user);
