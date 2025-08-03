@@ -101,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: StyledAppBarTitle(widget.title),
       ),
       body: Center( 
         child: Column(

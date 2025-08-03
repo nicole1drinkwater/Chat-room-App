@@ -98,7 +98,7 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sign up'),
+        title: const StyledAppBarTitle('Sign up'),
         centerTitle: true,
       ),
       body: Container(
