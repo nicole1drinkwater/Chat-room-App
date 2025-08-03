@@ -274,6 +274,8 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
       ),
       body: Column(
         children: [
+        const SizedBox(height: 7),
+
           Expanded(
               child: StreamBuilder<List<Message>> (
                 stream: Provider.of<MessageStore>(context).messagesStream,
