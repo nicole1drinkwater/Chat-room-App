@@ -150,13 +150,8 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
     showDialog(context: context,
      builder: (context) {
       return AlertDialog(
-        title: Text("Online Users",
-        style: GoogleFonts.notoSans(
-            fontSize: 18, 
-            fontWeight: FontWeight.bold, 
-            color: Colors.black, 
-          ),
-        ),
+        title: const StyledHeading('Missing Text', color: Colors.black),
+
         content: SizedBox(
           width: double.maxFinite,
           child: StreamBuilder<QuerySnapshot<User>> (
@@ -192,11 +187,12 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context),
-           child: const StyledText("Close",
-                color: Color.fromRGBO(40, 145, 210, 1),
-),
-           )
+          StyledButton(
+              onPressed: () {
+                Navigator.pop(context);
+              }, 
+              child: const StyledText('Close'),
+            ),
         ],
       );
      }

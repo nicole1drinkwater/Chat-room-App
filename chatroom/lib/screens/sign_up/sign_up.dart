@@ -38,14 +38,14 @@ class _SignInScreenState extends State<SignInScreen> {
       
       showDialog(context: context, builder: (context) {
         return AlertDialog(
-          title: const StyledHeading('Missing Name'),
-          content: const StyledText('Please enter your name.'),
+          title: const StyledHeading('Missing Name', color: Colors.black,),
+          content: const StyledText('Please enter your name.', color: Colors.black,),
           actions: [
             StyledButton(
               onPressed: () {
                 Navigator.pop(context);
               }, 
-              child: const StyledHeading('Close'),
+              child: const StyledText('Close'),
             ),
           ],
           actionsAlignment: MainAxisAlignment.center,
