@@ -96,31 +96,53 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  @override
+  void initState() {
+    super.initState();
+    FlutterNativeSplash.remove();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: StyledAppBarTitle(widget.title),
-      ),
-      body: Center( 
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          
-          children: <Widget>[
-            const StyledTitle(
-              'Add a new account',
-            ),
-            
-            StyledButton(
-              onPressed: () {
-                Navigator.pushReplacement(context, MaterialPageRoute(
-                  builder: (context) => const SignInScreen(),
-                ));
-              },
-              child: const StyledText('Welcome'),
-            ),
-          ],
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Image.asset('assets/icon/app_icon.png',
+              height: 100, ),
+              
+              const SizedBox(height: 24),
+
+              const StyledTitle(
+                'Welcome to Chat Room',
+                color: Colors.black,
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 12),
+              const StyledText(
+                'Create an account to start chatting with people right now.',
+                color: Colors.black54,
+                textAlign: TextAlign.center,
+              ),
+
+              const Spacer(),
+
+              Center(
+                child: StyledButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => const SignInScreen()),
+                    );
+                  },
+                  child: const StyledText('Get Started'),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
