@@ -25,6 +25,7 @@ ThemeData primaryTheme = ThemeData(
     foregroundColor: AppColors.textColor,
     surfaceTintColor: Colors.transparent,
     centerTitle: true,
+    
   ),
 
   textTheme: TextTheme(
@@ -41,7 +42,7 @@ ThemeData primaryTheme = ThemeData(
     ),
      titleMedium: TextStyle(
       color: AppColors.titleColor,
-      fontSize: 30,
+      fontSize: 21,
       fontWeight: FontWeight.bold,
       letterSpacing: 2,
     )

@@ -8,6 +8,7 @@ import 'package:chatroom/theme.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import '../../models/message.dart';
@@ -15,7 +16,6 @@ import '../../models/user.dart';
 import '../../services/firestore_service.dart';
 import '../../shared/styled_button.dart';
 import '../../shared/styled_text.dart';
-
 
 class ChatRoomScreen extends StatefulWidget {
   const ChatRoomScreen({super.key});
@@ -150,8 +150,8 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
     showDialog(context: context,
      builder: (context) {
       return AlertDialog(
-        title: const Text("Online Users",
-        style: TextStyle(
+        title: Text("Online Users",
+        style: GoogleFonts.notoSans(
             fontSize: 18, 
             fontWeight: FontWeight.bold, 
             color: Colors.black, 
@@ -180,7 +180,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
                 itemBuilder: (context, index) {
                   final user = onlineUsers[index];
                   return ListTile(
-                    title: Text(user.name, style: const TextStyle(color: Colors.black)),
+                    title: StyledText(user.name, color: Colors.black),
                     leading: const CircleAvatar(
                       backgroundColor: Colors.green,
                       radius: 8,
@@ -193,10 +193,8 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
         ),
         actions: [
           TextButton(onPressed: () => Navigator.pop(context),
-           child: const Text("Close",
-                style: TextStyle(
+           child: const StyledText("Close",
                 color: Color.fromRGBO(40, 145, 210, 1),
-              ),
 ),
            )
         ],
@@ -265,8 +263,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Chat room',
-        style: TextStyle(fontWeight: FontWeight.bold),
+        title: const StyledAppBarTitle('Chat room',
         ),
 
         actions: [
