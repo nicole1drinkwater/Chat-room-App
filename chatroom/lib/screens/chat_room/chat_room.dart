@@ -150,7 +150,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
     showDialog(context: context,
      builder: (context) {
       return AlertDialog(
-        title: const StyledHeading('Missing Text', color: Colors.black),
+        title: const StyledHeading('Online Users', color: Colors.black),
 
         content: SizedBox(
           width: double.maxFinite,
@@ -162,7 +162,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
               }
               
               if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                return const Text("No users found.");
+                return const StyledText("No online users found.", color: Colors.black,);
               }
 
               final users = snapshot.data!.docs.map((doc) => doc.data()).toList();
@@ -194,6 +194,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
               child: const StyledText('Close'),
             ),
         ],
+        actionsAlignment: MainAxisAlignment.center,
       );
      }
      );

@@ -98,13 +98,16 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const StyledAppBarTitle('Sign up'),
+        title: const StyledAppBarTitle('Create account'),
         centerTitle: true,
       ),
       body: Container(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
+
         child: Column(
           children: [
+             const SizedBox(height: 5),
+
               TextField(
               controller: _nameController,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -115,12 +118,16 @@ class _SignInScreenState extends State<SignInScreen> {
             )
             ),
 
-            StyledButton(
-              onPressed: () {
-                handleSubmit();
-              },
-              child: const StyledText('Sign up'),
-            ),
+            const Spacer(),
+
+              Center(
+                child: StyledButton(
+                  onPressed: () {
+                    handleSubmit();
+                  },
+                  child: const StyledText('Get Started'),
+                ),
+              )
           ]
         ),
       ),
