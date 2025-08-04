@@ -274,7 +274,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
       ),
       body: Column(
         children: [
-        const SizedBox(height: 7),
+        const SizedBox(height: 4),
 
           Expanded(
               child: StreamBuilder<List<Message>> (
@@ -320,47 +320,58 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
           ),
 
           Padding(
-            padding: const EdgeInsets.all(9.0),
+            padding: const EdgeInsets.all(7),
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center, 
-
-              children: [                          
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
                 Expanded(
                   child: TextField(
                     controller: _messageController,
+                    keyboardType: TextInputType.multiline,
+                    minLines: 1,
+                    maxLines: 5,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: AppColors.inputTextColor,
-                    ),
+                          color: AppColors.inputTextColor,
+                        ),
                     decoration: InputDecoration(
                       hintText: 'Enter a message...',
-                      contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+                      contentPadding:
+                          const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
                       isDense: true,
-
                       suffixIcon: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
-                          IconButton(icon: const Icon(Icons.attach_file),
-                          onPressed: _pickImageFromGallery,
-                          tooltip: 'Choose from the gallery',
+                          IconButton(
+                            icon: const Icon(Icons.attach_file),
+                            onPressed: _pickImageFromGallery,
+                            tooltip: 'Choose from the gallery',
                           ),
-                          IconButton(icon: const Icon(Icons.camera_alt_outlined),
-                          onPressed: _pickImageFromCamera,
-                          tooltip: 'Take a picture',
+                          IconButton(
+                            icon: const Icon(Icons.camera_alt_outlined),
+                            onPressed: _pickImageFromCamera,
+                            tooltip: 'Take a picture',
                           )
                         ],
                       ),
-                      ),
                     ),
                   ),
-                
-                const SizedBox(width: 8), 
-
-                IconButton(
-                  onPressed: () {
-                    handleSubmit();
-                  },
-                  icon: Icon(Icons.send, color: AppColors.primaryColor,),
                 ),
+                const SizedBox(width: 8),
+                Container(
+                  decoration: const BoxDecoration(
+                    color: Color.fromRGBO(10, 132, 255, 1),
+                    shape: BoxShape.circle,
+                  ),
+                  child: IconButton(
+                    onPressed: () {
+                      handleSubmit();
+                    },
+                    icon: const Icon(
+                      Icons.send,
+                      color: Colors.white,
+                    ),
+                  ),
+                )
               ],
             ),
           ),
