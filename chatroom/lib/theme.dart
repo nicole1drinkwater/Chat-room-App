@@ -12,6 +12,7 @@ class AppColors {
   static Color textColor = const Color.fromRGBO(255, 255, 255, 1);
   static Color successColor = const Color.fromRGBO(46, 204, 113, 1);
   static Color highlightColor = const Color.fromRGBO(231, 76, 60, 1);
+  static Color receivedMessage = const Color.fromRGBO(228, 230, 235, 1.0);
 }
 
 ThemeData primaryTheme = ThemeData(
@@ -20,7 +21,7 @@ ThemeData primaryTheme = ThemeData(
     seedColor: AppColors.primaryColor,
   ),
 
-  scaffoldBackgroundColor: AppColors.secondaryAccent,
+  scaffoldBackgroundColor: Colors.white,
 
   appBarTheme: AppBarTheme(
     backgroundColor: AppColors.primaryAccent,
@@ -60,10 +61,12 @@ ThemeData primaryTheme = ThemeData(
 
   inputDecorationTheme: InputDecorationTheme(
     filled: true,
-    fillColor: AppColors.textColor,
+    fillColor: Colors.white,
     border: OutlineInputBorder(
     borderRadius: BorderRadius.circular(12),
-    borderSide: BorderSide.none,
+    borderSide: BorderSide(
+      color: const Color(0xFFE4E6EB),
+    ),
     ),
 
     focusedBorder: OutlineInputBorder(

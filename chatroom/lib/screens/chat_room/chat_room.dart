@@ -32,6 +32,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
 
   bool _isAtBottom = true;
   int _previousMessageCount = 0;
+   bool _isTyping = false;
 
   @override
   void initState() {
@@ -44,14 +45,24 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
 
     _scrollController.addListener(_scrollListener);
 
+    _messageController.addListener(_onTextChanged);
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       userStore.fetchUsersOnce();
     });
 
   }
 
-    void _scrollListener() {
-    if (!_scrollController.hasClients) return;
+  void _onTextChanged() {
+    if (mounted) {
+      setState(() {
+        _isTyping = _messageController.text.trim().isNotEmpty;
+      });
+    }
+  }
+
+  void _scrollListener() {
+  if (!_scrollController.hasClients) return;
     if (_scrollController.position.atEdge) {
       if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
         if (!_isAtBottom) setState(() => _isAtBottom = true);
@@ -203,32 +214,14 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
 
+    _messageController.removeListener(_onTextChanged);
     _messageController.dispose();
     _scrollController.dispose(); 
     super.dispose();
   }
 
   void handleSubmit() async {
-    if (_messageController.text.trim().isEmpty) {
-      
-      showDialog(context: context, builder: (context) {
-        return AlertDialog(
-          title: const StyledHeading('Missing Text', color: Colors.black),
-          content: const StyledText('Please enter your text.', color: Colors.black),
-          actions: [
-            StyledButton(
-              onPressed: () {
-                Navigator.pop(context);
-              }, 
-              child: const StyledHeading('Close'),
-            ),
-          ],
-          actionsAlignment: MainAxisAlignment.center,
-        );
-      });
-
-      return;
-    }
+    if (!_isTyping) return;
 
       final userStore = Provider.of<UserStore>(context, listen: false);
 
@@ -358,13 +351,12 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
                 const SizedBox(width: 8),
                 Container(
                   decoration: BoxDecoration(
-                    color: AppColors.primaryColor,
+                    color: _isTyping ? AppColors.primaryColor : AppColors.receivedMessage
+,
                     shape: BoxShape.circle,
                   ),
                   child: IconButton(
-                    onPressed: () {
-                      handleSubmit();
-                    },
+                    onPressed: _isTyping ? handleSubmit : null,
                     icon: const Icon(
                       Icons.send,
                       color: Colors.white,
