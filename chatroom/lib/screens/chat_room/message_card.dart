@@ -36,7 +36,7 @@ class MessageCard extends StatelessWidget {
             ),
             padding: const EdgeInsets.all(5.0),
             decoration: BoxDecoration(
-              color: isSender ? AppColors.primaryColor : Colors.white,
+              color: isSender ? AppColors.secondaryColor : Colors.white,
               borderRadius: BorderRadius.circular(15.0),
             ),
             child: ClipRRect(
