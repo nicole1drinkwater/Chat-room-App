@@ -1,7 +1,6 @@
 import 'package:chatroom/main.dart';
 import 'package:chatroom/screens/chat_room/chat_room.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';

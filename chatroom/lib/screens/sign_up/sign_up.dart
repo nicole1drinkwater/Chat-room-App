@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../main.dart';
 import 'package:uuid/uuid.dart';
 import '../../models/user.dart';
 import '../../services/push_notifications.dart';
