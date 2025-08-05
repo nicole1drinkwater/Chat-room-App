@@ -15,6 +15,7 @@ import '../../models/user.dart';
 import '../../services/firestore_service.dart';
 import '../../shared/styled_button.dart';
 import '../../shared/styled_text.dart';
+import 'package:audioplayers/audioplayers.dart'; 
 
 class ChatRoomScreen extends StatefulWidget {
   const ChatRoomScreen({super.key});
@@ -29,6 +30,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
 
   final _messageController = TextEditingController();
   final _scrollController = ScrollController();
+  final _audioPlayer = AudioPlayer();
 
   bool _isAtBottom = true;
   int _previousMessageCount = 0;
@@ -107,6 +109,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
     );
     
     try {
+    _audioPlayer.play(AssetSource('audio/send sound.mp3'));
 
     final String fileName = '${currentUser.id}_${uuid.v4()}.jpg';
     final Reference storageRef = FirebaseStorage.instance.ref().child('chat_images').child(fileName);
@@ -217,6 +220,9 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
     _messageController.removeListener(_onTextChanged);
     _messageController.dispose();
     _scrollController.dispose(); 
+
+     _audioPlayer.dispose();
+
     super.dispose();
   }
 
@@ -237,6 +243,8 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
         senderID: senderId,
         messageID: '',
       ));
+
+      _audioPlayer.play(AssetSource('audio/send sound.mp3'));
 
       _messageController.clear();
 
@@ -351,8 +359,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
                 const SizedBox(width: 8),
                 Container(
                   decoration: BoxDecoration(
-                    color: _isTyping ? AppColors.primaryColor : AppColors.receivedMessage
-,
+                    color: _isTyping ? AppColors.primaryColor : AppColors.receivedMessage,
                     shape: BoxShape.circle,
                   ),
                   child: IconButton(
