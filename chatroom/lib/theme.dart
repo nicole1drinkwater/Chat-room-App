@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static Color primaryColor = const Color.fromRGBO(40, 160, 220, 1);
+  static Color primaryColor = const Color(0xFF00a9ec);
   static Color primaryAccent = const Color.fromRGBO(10, 132, 255, 1);
-  static Color secondaryColor = const Color.fromRGBO(55, 149, 255, 1);
+  static Color secondaryColor = const Color.fromRGBO(0, 169, 236, 1);
   static Color secondaryAccent = const Color.fromRGBO(242, 242, 247, 1);
   static Color titleColor = const Color.fromRGBO(255, 255, 255, 1);
   static Color inputTextColor = Colors.black;
+  static Color focusedBorderColor = const Color.fromRGBO(135, 206, 250, 1);
+  static Color appBarColor = const Color.fromRGBO(0, 152, 212, 1.0);
   static Color textColor = const Color.fromRGBO(255, 255, 255, 1);
   static Color successColor = const Color.fromRGBO(46, 204, 113, 1);
   static Color highlightColor = const Color.fromRGBO(231, 76, 60, 1);
@@ -21,7 +23,7 @@ ThemeData primaryTheme = ThemeData(
   scaffoldBackgroundColor: AppColors.secondaryAccent,
 
   appBarTheme: AppBarTheme(
-    backgroundColor: AppColors.secondaryColor,
+    backgroundColor: AppColors.primaryAccent,
     foregroundColor: AppColors.textColor,
     surfaceTintColor: Colors.transparent,
     centerTitle: true,
@@ -67,13 +69,14 @@ ThemeData primaryTheme = ThemeData(
     focusedBorder: OutlineInputBorder(
     borderRadius: BorderRadius.circular(12),
     borderSide: BorderSide(
-      color: AppColors.primaryColor, 
+      color: AppColors.focusedBorderColor, 
       width: 2.0,
     ),
     ),
 
     labelStyle: TextStyle(color: AppColors.textColor),
     prefixIconColor: AppColors.textColor,
+    
   ),
 
   dialogTheme: DialogTheme(
