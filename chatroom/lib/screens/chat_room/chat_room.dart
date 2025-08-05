@@ -210,7 +210,9 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
         actionsAlignment: MainAxisAlignment.center,
       );
      }
-     );
+     ).then((_) {
+      FocusScope.of(context).requestFocus(FocusNode());
+     });
   }
 
   @override
