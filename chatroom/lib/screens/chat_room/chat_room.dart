@@ -109,8 +109,6 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
     );
     
     try {
-    _audioPlayer.play(AssetSource('audio/send sound.mp3'));
-
     final String fileName = '${currentUser.id}_${uuid.v4()}.jpg';
     final Reference storageRef = FirebaseStorage.instance.ref().child('chat_images').child(fileName);
 
@@ -126,6 +124,8 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
       messageID: '',
       timeSent: DateTime.now(),
     );
+    
+    _audioPlayer.play(AssetSource('audio/send sound.mp3'));
     
     Provider.of<MessageStore>(context, listen: false).addMessage(message);
 
@@ -274,7 +274,6 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
       ),
       body: Column(
         children: [
-        const SizedBox(height: 4),
 
           Expanded(
               child: StreamBuilder<List<Message>> (
@@ -359,14 +358,14 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
                 const SizedBox(width: 8),
                 Container(
                   decoration: BoxDecoration(
-                    color: _isTyping ? AppColors.primaryColor : AppColors.receivedMessage,
+                    color: _isTyping ? AppColors.primaryColor : const Color(0xFFE4E6EB),
                     shape: BoxShape.circle,
                   ),
                   child: IconButton(
                     onPressed: _isTyping ? handleSubmit : null,
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.send,
-                      color: Colors.white,
+                      color: _isTyping ? Colors.white :  Colors.grey[600]
                     ),
                   ),
                 )
