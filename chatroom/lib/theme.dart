@@ -8,7 +8,6 @@ class AppColors {
   static Color titleColor = const Color.fromRGBO(255, 255, 255, 1);
   static Color inputTextColor = Colors.black;
   static Color focusedBorderColor = const Color.fromRGBO(135, 206, 250, 1);
-  static Color appBarColor = const Color.fromRGBO(0, 152, 212, 1.0);
   static Color textColor = const Color.fromRGBO(255, 255, 255, 1);
   static Color successColor = const Color.fromRGBO(46, 204, 113, 1);
   static Color highlightColor = const Color.fromRGBO(231, 76, 60, 1);
@@ -64,8 +63,8 @@ ThemeData primaryTheme = ThemeData(
     fillColor: Colors.white,
     border: OutlineInputBorder(
     borderRadius: BorderRadius.circular(12),
-    borderSide: BorderSide(
-      color: const Color(0xFFE4E6EB),
+    borderSide: const BorderSide(
+      color: Color(0xFFE4E6EB),
     ),
     ),
 
