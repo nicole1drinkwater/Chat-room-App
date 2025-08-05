@@ -2,10 +2,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chatroom/models/message.dart';
 import 'package:chatroom/models/user.dart';
 import 'package:chatroom/services/user_store.dart';
-import 'package:chatroom/shared/styled_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:chat_bubbles/chat_bubbles.dart';
+
+import '../../theme.dart';
 
 class MessageCard extends StatelessWidget {
   final Message message;
@@ -35,7 +36,7 @@ class MessageCard extends StatelessWidget {
             ),
             padding: const EdgeInsets.all(5.0),
             decoration: BoxDecoration(
-              color: isSender ? const Color.fromRGBO(0, 97, 166, 1) : Colors.white,
+              color: isSender ? AppColors.primaryColor : Colors.white,
               borderRadius: BorderRadius.circular(15.0),
             ),
             child: ClipRRect(
@@ -71,7 +72,7 @@ class MessageCard extends StatelessWidget {
         } else {
           messageBody = BubbleSpecialThree(
             text: message.messageContent,
-            color: isSender ? const Color.fromRGBO(0, 97, 166, 1) : Colors.white,
+            color: isSender ? AppColors.primaryColor : Colors.white,
             tail: true,
             isSender: isSender,
             textStyle: TextStyle(

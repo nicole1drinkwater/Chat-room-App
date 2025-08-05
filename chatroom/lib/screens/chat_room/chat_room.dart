@@ -8,7 +8,6 @@ import 'package:chatroom/theme.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import '../../models/message.dart';
@@ -214,8 +213,8 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
       
       showDialog(context: context, builder: (context) {
         return AlertDialog(
-          title: const StyledHeading('Missing Text'),
-          content: const StyledText('Please enter your text.'),
+          title: const StyledHeading('Missing Text', color: Colors.black),
+          content: const StyledText('Please enter your text.', color: Colors.black),
           actions: [
             StyledButton(
               onPressed: () {
@@ -358,8 +357,8 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
                 ),
                 const SizedBox(width: 8),
                 Container(
-                  decoration: const BoxDecoration(
-                    color: Color.fromRGBO(10, 132, 255, 1),
+                  decoration: BoxDecoration(
+                    color: AppColors.primaryColor,
                     shape: BoxShape.circle,
                   ),
                   child: IconButton(

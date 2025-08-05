@@ -25,7 +25,7 @@ class PushNotifications {
       
       if (maxRetries > 0) {
         print("Retrying after 10 seconds...");
-        await Future.delayed(Duration(seconds: 10));
+        await Future.delayed(const Duration(seconds: 10));
         return getFCMToken(maxRetries: maxRetries - 1);
       } else {
         return null;
