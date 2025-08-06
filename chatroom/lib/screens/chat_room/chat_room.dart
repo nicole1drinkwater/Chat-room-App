@@ -120,7 +120,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
       messageContent: '',
       senderID: currentUser.id,
       imageUrl: downloadUrl, 
-      messageType: 'image',
+      messageType: 'Image',
       messageID: '',
       timeSent: DateTime.now(),
     );
