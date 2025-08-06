@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:chatroom/screens/chat_room/chat_room.dart';
 import 'package:chatroom/services/message_store.dart';
 import 'package:chatroom/services/push_notifications.dart';
@@ -15,7 +13,6 @@ import 'package:chatroom/screens/user_checker/user_checker.dart';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'firebase_options.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
@@ -31,13 +28,6 @@ void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   
-  if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
-    sqfliteFfiInit();
-    databaseFactory = databaseFactoryFfi;
-  }
-  
-  WidgetsFlutterBinding.ensureInitialized();
-
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
