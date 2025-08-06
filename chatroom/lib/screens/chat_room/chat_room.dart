@@ -26,7 +26,6 @@ class ChatRoomScreen extends StatefulWidget {
 
 class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObserver{
   late UserStore userStore;
-  File ? _selectedImage;
 
   final _messageController = TextEditingController();
   final _scrollController = ScrollController();
@@ -34,7 +33,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
 
   bool _isAtBottom = true;
   int _previousMessageCount = 0;
-   bool _isTyping = false;
+   bool _hasEnteredText = false;
 
   @override
   void initState() {
@@ -58,7 +57,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
   void _onTextChanged() {
     if (mounted) {
       setState(() {
-        _isTyping = _messageController.text.trim().isNotEmpty;
+        _hasEnteredText = _messageController.text.trim().isNotEmpty;
       });
     }
   }
@@ -231,7 +230,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
   }
 
   void handleSubmit() async {
-    if (!_isTyping) return;
+    if (!_hasEnteredText) return;
 
       final userStore = Provider.of<UserStore>(context, listen: false);
 
@@ -364,14 +363,14 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
                 const SizedBox(width: 8),
                 Container(
                   decoration: BoxDecoration(
-                    color: _isTyping ? AppColors.primaryColor : const Color(0xFFE4E6EB),
+                    color: _hasEnteredText ? AppColors.primaryColor : const Color(0xFFE4E6EB),
                     shape: BoxShape.circle,
                   ),
                   child: IconButton(
-                    onPressed: _isTyping ? handleSubmit : null,
+                    onPressed: _hasEnteredText ? handleSubmit : null,
                     icon: Icon(
                       Icons.send,
-                      color: _isTyping ? Colors.white :  Colors.grey[600]
+                      color: _hasEnteredText ? Colors.white :  Colors.grey[600]
                     ),
                   ),
                 )
