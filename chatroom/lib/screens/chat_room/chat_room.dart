@@ -124,6 +124,8 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
       messageID: '',
       timeSent: DateTime.now(),
     );
+
+    scrollToBottom();
     
     _audioPlayer.play(AssetSource('audio/send sound.mp3'));
     
@@ -245,6 +247,8 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
         senderID: senderId,
         messageID: '',
       ));
+
+      scrollToBottom();
 
       _audioPlayer.play(AssetSource('audio/send sound.mp3'));
 
