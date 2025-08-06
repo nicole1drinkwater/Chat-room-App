@@ -132,6 +132,8 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Image sent successfully! Please wait a moment for it to appear...')),
     );
+
+    scrollToBottom();
     
   } catch (e) {
     print("Error sending image: $e");
@@ -245,6 +247,8 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> with WidgetsBindingObse
         senderID: senderId,
         messageID: '',
       ));
+
+      scrollToBottom();
 
       _audioPlayer.play(AssetSource('audio/send sound.mp3'));
 
