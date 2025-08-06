@@ -36,6 +36,8 @@ void main() async {
     databaseFactory = databaseFactoryFfi;
   }
   
+  WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
